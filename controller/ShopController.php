@@ -177,6 +177,7 @@ class ShopController{
     }
 
     public function order(){
+        require_once('models/mail_order.php');
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $data = [
             'name' => $_POST['name'],
@@ -188,6 +189,11 @@ class ShopController{
         ];
         $customer = new Customer();
         $result = $customer->SaveCustomer($data);
+        $subject='Đặt hàng';
+        $contents = 'abc';
+        $name =  $_POST['name'];
+        $email = $_POST['email'];
+        send_email_order($email,$name,$contents,$subject);
         unset($_SESSION['cart']);
         header('Location: ?view=&act=');
     }

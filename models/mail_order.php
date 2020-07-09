@@ -1,6 +1,5 @@
 <?php
-
-function send_email($email_recive,$name,$contents,$subject,$password){
+function send_email_order($email_recive,$name,$contents,$subject){
     //https://www.google.com/settings/security/lesssecureapps
     // Khai báo thư viên phpmailer
     require "phpmailer/PHPMailerAutoload.php";
@@ -39,12 +38,8 @@ function send_email($email_recive,$name,$contents,$subject,$password){
     $mail->MsgHTML($contents); //Nội dung của bức thư.
     // $mail->MsgHTML(file_get_contents("email-template.html"), dirname(__FILE__));
     // Gửi thư với tập tin html
-    $mail->Body= "Chào bạn $name.
-    Mật khẩu của bạn là: $password.
-    Email của bạn là: $email_recive.";
-    $mail->AltBody = "Chào bạn $name.
-    Mật khẩu của bạn là: $password.
-    Email của bạn là: $email_recive.";//Nội dung rút gọn hiển thị bên ngoài thư mục thư.
+    $mail->Body= "Chào bạn $name.Đơn hàng của bạn đã được đặt.";
+    $mail->AltBody = "Chào bạn $name.Đơn hàng của bạn đã được đặt."; //Nội dung rút gọn hiển thị bên ngoài thư mục thư.
     //$mail->AddAttachment("images/attact-tui.gif");//Tập tin cần attach
 
     //Tiến hành gửi email và kiểm tra lỗi
