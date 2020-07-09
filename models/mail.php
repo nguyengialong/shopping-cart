@@ -30,8 +30,8 @@ function send_email($email_recive,$name,$contents,$subject,$password){
     $mail->SMTPAuth   = true; //Xác thực SMTP
     $mail->Username   = "nguyengialong9x@gmail.com"; // Tên đăng nhập tài khoản Gmail
     $mail->Password   = "01294831010"; //Mật khẩu của gmail
-    $mail->SetFrom("nguyengialong9x@gmail.com", "Zent Group"); // Thông tin người gửi
-    $mail->AddReplyTo("nguyengialong9x@gmail.com","Zent Group");// Ấn định email sẽ nhận khi người dùng reply lại.
+    $mail->SetFrom("nguyengialong9x@gmail.com", "Fast Fashion Shop"); // Thông tin người gửi
+    $mail->AddReplyTo("nguyengialong9x@gmail.com","Fast Fashion Shop");// Ấn định email sẽ nhận khi người dùng reply lại.
     $mail->AddAddress($email_recive, $name);//Email của người nhận
     //$mail->AddCC($email_recive, $name);//Email của người nhận
     $mail->isHTML(true);
