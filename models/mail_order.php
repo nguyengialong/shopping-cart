@@ -38,8 +38,8 @@ function send_email_order($email_recive,$name,$contents,$subject){
     $mail->MsgHTML($contents); //Nội dung của bức thư.
     // $mail->MsgHTML(file_get_contents("email-template.html"), dirname(__FILE__));
     // Gửi thư với tập tin html
-    $mail->Body= "Chào bạn $name.Đơn hàng của bạn đã được đặt.";
-    $mail->AltBody = "Chào bạn $name.Đơn hàng của bạn đã được đặt."; //Nội dung rút gọn hiển thị bên ngoài thư mục thư.
+    $mail->Body= "Chào bạn $name.Đơn hàng của bạn đã được đặt thành công.";
+    $mail->AltBody = "Chào bạn $name.Đơn hàng của bạn đã được đặt thành công."; //Nội dung rút gọn hiển thị bên ngoài thư mục thư.
     //$mail->AddAttachment("images/attact-tui.gif");//Tập tin cần attach
 
     //Tiến hành gửi email và kiểm tra lỗi

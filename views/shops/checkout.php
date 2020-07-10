@@ -79,6 +79,11 @@ include('views/shops/layouts/header_checkout.php');
                                             $total += $_SESSION['cart'][$key]['price']*$_SESSION['cart'][$key]['qty'];
                                     ?>
                                     <li class="d-flex flex-row align-items-center justify-content-start">
+                                        <div class="cart_extra_total_title">Mã sản phẩm:</div>
+                                        <div class="cart_extra_total_value ml-auto"><p style="font-size: 12px; font-weight: bold;"><?=$_SESSION['cart'][$key]['id']?></p></div>
+
+                                    </li>
+                                    <li class="d-flex flex-row align-items-center justify-content-start">
                                         <div class="cart_extra_total_title">Tên sản phẩm:</div>
                                         <div class="cart_extra_total_value ml-auto"><p style="font-size: 12px; font-weight: bold;"><?=$_SESSION['cart'][$key]['name']?></p></div>
 

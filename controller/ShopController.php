@@ -3,12 +3,18 @@ require_once('models/Category.php');
 require_once ('models/Product.php');
 require_once ('models/User.php');
 require_once ('models/Customer.php');
+require_once ('models/Bill.php');
+require_once ('models/Bill_detail.php');
+
 class ShopController{
 
     public $category;
     public $product;
     public $user;
     public $customer;
+    public $bill;
+    public $bill_detail;
+
     public function __construct()
     {
 
@@ -16,6 +22,10 @@ class ShopController{
         $this->product = new Product();
         $this->user = new User();
         $this->customer = new Customer();
+        $this->bill = new Bill();
+        $this->bill_detail = new Bill_detail();
+
+
 
     }
     public function index()
@@ -132,7 +142,6 @@ class ShopController{
 
           }
           if($index >= 0){
-
               $qty = $product_cart[$index]['qty'] +=1;
           }
       }
@@ -187,8 +196,37 @@ class ShopController{
             'phone_number' => $_POST['phone_number'],
             'created_at' => date("Y-m-d H:i:s"),
         ];
+        $total = 0;
+        foreach ($_SESSION['cart'] as $key => $value){
+            $total += $_SESSION['cart'][$key]['qty'] *$_SESSION['cart'][$key]['price'];
+            $data_bill = [
+                'user_id' => $_SESSION['user']['id'],
+                'total' => $total,
+                'date_oder' => date("Y-m-d H:i:s"),
+                'created_at' => date("Y-m-d H:i:s"),
+            ];
+        }
         $customer = new Customer();
+        $bill = new Bill();
+        $data_billdetail = new Bill_detail();
         $result = $customer->SaveCustomer($data);
+        $result_bill = $bill->save($data_bill);
+        $bills = $this->bill->all();
+        foreach ($bills as $value){
+            $bill_id = $value['id'];
+        }
+//        var_dump($bill_id);
+        foreach ($_SESSION['cart'] as $key => $item){
+            $bill_detail = [
+                'bill_id' => $bill_id,
+                'product_id' => $item['id'],
+                'quality' => $item['qty'],
+                'price' => $item['price'],
+                'created_at' => date("Y-m-d H:i:s"),
+            ];
+        }
+        $save_billdetail = $data_billdetail->SaveBillDetail($bill_detail);
+        print_r($_SESSION['cart'][$key]['id']);
         $subject='Thông tin đơn hàng';
         $contents = 'abc';
         $name =  $_POST['name'];

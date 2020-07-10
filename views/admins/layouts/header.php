@@ -50,30 +50,59 @@
         <hr class="sidebar-divider">
 
         <!-- Heading -->
+        <?php
+        if($_SESSION['user']['role'] == 1){
 
-        <li class="nav-item">
-            <a class="nav-link" href="?view=admin&&act=list_category">
-                <i class="fas fa-list"></i>
+            echo "<li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"?view=admin&&act=list_category\">
+                <i class=\"fas fa-list\"></i>
                 <span>Quản lý danh mục</span></a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="?view=admin&&act=list_product">
-                <i class="fab fa-product-hunt"></i>
+        <li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"?view=admin&&act=list_product\">
+                <i class=\"fab fa-product-hunt\"></i>
                 <span>Quản lý sản phẩm</span></a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="?view=admin&&act=list_user">
-                <i class="fas fa-users"></i>
+        <li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"?view=admin&&act=list_user\">
+                <i class=\"fas fa-users\"></i>
                 <span>Quản lý người dùng</span></a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="?view=admin&&act=list_customer">
-                <i class="fas fa-list"></i>
+        <li class=\"nav-item\">
+            <a class=\"nav-link\" href=\"?view=admin&&act=list_customer\">
+                <i class=\"fas fa-list\"></i>
                 <span>Danh sách khách hàng</span></a>
-        </li>
+        </li>";
+        }
+
+
+        ?>
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" href="?view=admin&&act=list_category">-->
+<!--                <i class="fas fa-list"></i>-->
+<!--                <span>Quản lý danh mục</span></a>-->
+<!--        </li>-->
+<!---->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" href="?view=admin&&act=list_product">-->
+<!--                <i class="fab fa-product-hunt"></i>-->
+<!--                <span>Quản lý sản phẩm</span></a>-->
+<!--        </li>-->
+<!---->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" href="?view=admin&&act=list_user">-->
+<!--                <i class="fas fa-users"></i>-->
+<!--                <span>Quản lý người dùng</span></a>-->
+<!--        </li>-->
+<!---->
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link" href="?view=admin&&act=list_customer">-->
+<!--                <i class="fas fa-list"></i>-->
+<!--                <span>Danh sách khách hàng</span></a>-->
+<!--        </li>-->
 
 
         <!-- Nav Item - Pages Collapse Menu -->
