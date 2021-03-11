@@ -28,6 +28,8 @@ class AdminController
     public function list_category()
     {
         $categories = $this->category->all();
+
+
         require_once('views/admins/categories/index.php');
     }
 
@@ -213,9 +215,11 @@ class AdminController
     }
 
     public function update_user(){
+
         date_default_timezone_set('Asia/Ho_Chi_Minh');
 
         $id = $_GET['id'];
+
 
         $data = [
 
@@ -227,8 +231,10 @@ class AdminController
             'update_at' => date("Y-m-d H:i:s"),
         ];
 
+
+
         $user = $this->user->update($data, $id);
-        header('Location: index.php?view=admin&act=list_permission');
+        header('Location: index.php?view=admin&act=list_user');
     }
 
 

@@ -197,8 +197,9 @@ include('views/admins/layouts/header.php');
                 <form action="?view=admin&act=update_permission&&id=<?= $data[0]['id'] ?>" method="POST" role="form" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="">Tên permission</label>
-                        <input type="text" class="form-control" id="title" placeholder="" name="name">
+                        <input type="text" class="form-control" id="title" placeholder="" name="name" value="<?= $data[0]['name'] ?>" required>
                     </div>
+                    <button type="submit" class="btn" style="background-color:#2e59d9; color: white">Update</button>
                 </form>
             </div>
 

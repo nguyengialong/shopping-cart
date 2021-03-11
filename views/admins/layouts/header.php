@@ -75,7 +75,40 @@
             <a class=\"nav-link\" href=\"?view=admin&&act=list_customer\">
                 <i class=\"fas fa-list\"></i>
                 <span>Danh sách khách hàng</span></a>
-        </li>";
+        </li>
+        
+              <li class=\"nav-item\">
+                        <a class=\"nav-link collapsed\" href=\"#\" data-toggle=\"collapse\" data-target=\"#collapseUtill\" aria-expanded=\"true\" aria-controls=\"collapseUtill\">
+                            <i class=\"nav-icon fas fa-tree\"></i>
+                            <span>Role && Permission</span>
+                        </a>
+                        <div id=\"collapseUtill\" class=\"collapse\" aria-labelledby=\"headingUtilities\" data-parent=\"#accordionSidebar\">
+                            <div class=\"bg-white py-2 collapse-inner rounded\">
+               
+                                    <a class=\"dropdown-item\" href=\"?view=admin&&act=list_role\"><i class=\"fa fa-btn fa-list-alt\" ></i> Role</a>
+                                    <a class=\"dropdown-item\"href=\"?view=admin&&act=list_permission\"><i class=\"fa fa-btn fa-list-alt\" ></i> Permission</a>
+            
+                
+                            </div>
+                        </div>
+               </li>
+            
+             <li class=\"nav-item\">
+                <a class=\"nav-link collapsed\" href=\"#\" data-toggle=\"collapse\" data-target=\"#collapseUtilities\" aria-expanded=\"true\" aria-controls=\"collapseUtilities\">
+                    <i class=\"nav-icon fas fa-tree\"></i>
+                    <span>Import Export File</span>
+                </a>
+                <div id=\"collapseUtilities\" class=\"collapse\" aria-labelledby=\"headingUtilities\" data-parent=\"#accordionSidebar\">
+                    <div class=\"bg-white py-2 collapse-inner rounded\">
+                        <a class=\"dropdown-item\" href=\"\"><i class=\"fa fa-btn fa-plus\"></i> Import Form</a>
+                        <a class=\"dropdown-item\" href=\"\"><i class=\"fa fa-btn fa-plus\"></i> Export</a>
+                    </div>
+                </div>
+            </li>
+        
+        
+        ";
+
         }
 
 

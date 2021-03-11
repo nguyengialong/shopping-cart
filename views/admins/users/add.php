@@ -191,9 +191,10 @@ include('views/admins/layouts/header.php');
 
             <!-- Page Heading -->
             <div class="container">
+
                 <h3 align="center">Add User</h3>
 
-                <hr>
+                <br>
 
                 <form class="user" method="POST" action="?view=admin&act=store_user">
                     <div class="form-group row">
