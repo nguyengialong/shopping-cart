@@ -167,6 +167,7 @@ class AdminController
         $users = $this->user->all();
         require_once ('views/admins/users/index.php');
     }
+
     public function list_customer(){
         $customers = $this->customer->all();
         require_once ('views/admins/users/customer.php');
@@ -180,6 +181,57 @@ class AdminController
         header('Location: ?view=admin&act=list_user');
 
     }
+
+    public function add_user(){
+
+        require_once ('views/admins/users/add.php');
+    }
+
+    public function store_user(){
+
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+        $data = [
+
+            'name' => $_POST['name'],
+            'phone' => $_POST['phone'],
+            'address' => $_POST['address'],
+            'email' => $_POST['email'],
+            'password' => $_POST['password'],
+            'created_at' => date("Y-m-d H:i:s"),
+            'update_at' => date("Y-m-d H:i:s"),
+        ];
+        $this->user->insert($data);
+        header("Location: ?view=admin&act=list_user");
+    }
+
+    public function edit_user(){
+
+        $id = $_GET['id'];
+        $data = $this->user->edit($id);
+        require_once ('views/admins/users/edit.php');
+    }
+
+    public function update_user(){
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+        $id = $_GET['id'];
+
+        $data = [
+
+            'name' => $_POST['name'],
+            'email' => $_POST['email'],
+            'address' => $_POST['address'],
+            'phone' => $_POST['phone'],
+            'created_at' => date("Y-m-d H:i:s"),
+            'update_at' => date("Y-m-d H:i:s"),
+        ];
+
+        $user = $this->user->update($data, $id);
+        header('Location: index.php?view=admin&act=list_permission');
+    }
+
+
 
 
 }

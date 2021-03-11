@@ -199,12 +199,7 @@ include('views/admins/layouts/header.php');
                         <label for="">Tên danh mục</label>
                         <input type="text" class="form-control" id="title" placeholder="" name="name">
                     </div>
-<!--                <div class="form-group">-->
-<!--                    <label for="">Parent Category</label>-->
-<!--                    <select class="form-control" id=""  name="parent_id">-->
-<!--                            <option value="1">Sáp</option>-->
-<!--                    </select>-->
-<!--                </div>-->
+
                     <div class="form-group">
                         <label for="">Hình ảnh danh mục</label>
                         <input type="file" class="form-control" id="" placeholder="" name="image">

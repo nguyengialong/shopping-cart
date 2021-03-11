@@ -8,6 +8,7 @@ class LoginController
 {
 
     function form(){
+
         require_once('views/login/login.php');
 
     }
@@ -19,6 +20,7 @@ class LoginController
 
 
     function login(){
+
         $data['email'] = $_POST['email'];
         $data['password'] = $_POST['password'];
         $user = new user();
@@ -71,10 +73,12 @@ class LoginController
     }
 
     function forgot_password(){
+
         require_once('views/login/forgot_password.php');
     }
 
     function get_password(){
+
         require_once('models/mail.php');
         $data = $_POST['email'];
         $user = new user();
@@ -96,12 +100,15 @@ class LoginController
             header("Location: ?view=login&act=forgot_password");
         }
     }
+
     function change_password(){
+
         require_once('views/login/change_password.php');
 
     }
 
     function new_password(){
+
         $data['id'] = $_GET['id'];
         $data['new_password'] = $_POST['new_password'];
         $user = new user();
@@ -111,10 +118,12 @@ class LoginController
     }
 
     function error(){
+
         require_once('views/login/error.php');
     }
 
     function logout(){
+
         session_destroy();
 //        unset($_SESSION['cart']);
         header('Location: ?view=login&act=');

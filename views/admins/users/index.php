@@ -188,7 +188,9 @@ include('views/admins/layouts/header.php');
 
             <!-- Page Heading -->
             <h3 class="text-center">--- Danh sách người dùng ---</h3>
-
+            <div class="col-6">
+                <a href="?view=admin&act=add_user" class="btn" style="background-color:#2e59d9;color:white; ">Add User</a>
+            </div>
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">

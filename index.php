@@ -43,17 +43,23 @@ switch ($mod) {
         }
         break;
     //end
+
     //admin
     case 'admin':
         require_once('controller/AdminController.php');
+        require_once('controller/RoleController.php');
+        require_once('controller/PermissionController.php');
         include_once('middleware/check.php');
         $check = new Middleware();
         $check->checklogin();
         $admin_controller = new AdminController();
+        $role_controller = new RoleController();
+        $permission_controller = new PermissionController();
         switch ($act) {
             case 'index':
                 $admin_controller->index();
                 break;
+                //category
             case 'list_category':
                 $admin_controller->list_category();
                 break;
@@ -72,6 +78,7 @@ switch ($mod) {
             case 'edit_category':
                 $admin_controller->edit_category();
                 break;
+                // product
             case 'list_product':
                 $admin_controller->list_product();
                 break;
@@ -90,20 +97,73 @@ switch ($mod) {
             case 'delete_product':
                 $admin_controller->delete_product();
                 break;
+                //user
+
             case'list_user':
                 $admin_controller->list_user();
                 break;
             case 'list_customer':
                 $admin_controller->list_customer();
                 break;
+            case 'store_user':
+                $admin_controller->store_user();
+                break;
+            case 'edit_user':
+                $admin_controller->edit_user();
+                break;
+            case 'update_user':
+                $admin_controller->update_user();
+                break;
             case 'delete_user':
                 $admin_controller->delete_user();
                 break;
+
+
+                //role
+            case 'list_role':
+                $role_controller->list_role();
+                break;
+            case 'add_role':
+                $role_controller->add_role();
+                break;
+            case 'store_role':
+                $role_controller->store_role();
+                break;
+            case 'edit_role':
+                $role_controller->edit_role();
+                break;
+            case 'update_role':
+                $role_controller->update_role();
+                break;
+            case 'delete_role':
+                $role_controller->delete_role();
+                break;
+                //permission
+            case 'list_permission':
+                $permission_controller->list_permission();
+                break;
+            case 'add_permission':
+                $permission_controller->add_permission();
+                break;
+            case 'store_permission':
+                $permission_controller->store_permission();
+                break;
+            case 'edit_permission':
+                $permission_controller->edit_permission();
+                break;
+            case 'update_permission':
+                $permission_controller->update_permission();
+                break;
+            case 'delete_permission':
+                $permission_controller->delete_permission();
+                break;
+
             default:
                 break;
         }
         break;
     //end
+
     //shop
     case '':
         require_once('controller/ShopController.php');
@@ -145,6 +205,6 @@ switch ($mod) {
 
     default:
 
-        break;
+    break;
 }
 ?>

@@ -66,6 +66,7 @@ class ShopController{
             array_push($product_cart,$new_products);
 
         }else{
+
             $product_cart =  $_SESSION['cart'];
             $index = -1;
             for($i=0;$i<count($product_cart);$i++){

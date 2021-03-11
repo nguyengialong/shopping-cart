@@ -1,6 +1,7 @@
 <?php
 require_once ('models/Database.php');
 class Category{
+
     var $conn;
 
     function __construct()

@@ -1,7 +1,7 @@
+
 <?php
 include('views/admins/layouts/header.php');
 ?>
-<!-- End of Sidebar -->
 
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
@@ -38,7 +38,9 @@ include('views/admins/layouts/header.php');
                         <i class="fas fa-search fa-fw"></i>
                     </a>
                     <!-- Dropdown - Messages -->
+
                     <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+
                         <form class="form-inline mr-auto w-100 navbar-search">
                             <div class="input-group">
                                 <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
@@ -171,6 +173,7 @@ include('views/admins/layouts/header.php');
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                             Thay đổi mật khẩu
                         </a>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="?view=login&&act=logout" data-toggle="modal" data-target="#logoutModal">
                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                             Logout
@@ -187,61 +190,18 @@ include('views/admins/layouts/header.php');
         <div class="container-fluid">
 
             <!-- Page Heading -->
-            <h3 class="text-center">--- Danh sách sản phẩm ---</h3>
-            <div class="col-6">
-                <a href="?view=admin&act=add_product" class="btn" style="background-color:#2e59d9;color:white; ">Thêm mới sản phẩm</a>
-            </div>
-            <br>
+            <div class="container">
+                <h3 align="center">Edit Role</h3>
 
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4 table-responsive-lg">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Bảng sản phẩm</h6>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
-                            <thead>
-                            <tr>
-                                <th>Tên</th>
-                                <th>Hình ảnh</th>
-                                <th>Mô tả</th>
-                                <th>Giá</th>
-                                <th>Giá sale</th>
-                                <th>Chiết khấu</th>
-                                <th>Size</th>
-                                <th>Loại sản phẩm</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <?php foreach ($products as $value) {?>
-
-                                <tr>
-                                    <td><?= $value['name'] ?></td>
-                                    <td><img src="public/uploads/images/<?= $value['image'] ?>" alt="" width="90px" height="90px"></td>
-                                    <td><?= $value['description'] ?></td>
-                                    <td><?= number_format($value['price'])?>VND</td>
-                                    <td><?= $value['sale_price'] ?></td>
-                                    <td><?= $value['discount_percent'] ?></td>
-                                    <td><?= $value['size'] ?></td>
-                                    <td>
-                                        <?php foreach ($categories as $cate) {?>
-                                        <?php if ($cate['id'] == $value['category_id'])  echo $cate['name']?>
-                                        <?php }?>
-                                    </td>
-                                    <td>
-                                        <a href="?view=admin&act=edit_product&id=<?=$value['id']?>" class="btn btn-success"><i class="fas fa-pen"></i></a>
-                                        <a href="?view=admin&act=delete_product&id=<?=$value['id']?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                    </td>
-                                </tr>
-                            <?php } ?>
-                            </tbody>
-                        </table>
+                <hr>
+                <form action="?view=admin&act=update_role&&id=<?= $data[0]['id'] ?>" method="POST" role="form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="">Tên role</label>
+                        <input type="text" class="form-control" id="title" placeholder="" name="name">
                     </div>
-                </div>
+                </form>
             </div>
+
 
         </div>
         <!-- /.container-fluid -->
@@ -250,6 +210,44 @@ include('views/admins/layouts/header.php');
     <!-- End of Main Content -->
 
     <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Your Website 2019</span>
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
+
+</div>
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="?view=login&&act=logout">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?php
 include('views/admins/layouts/footer.php');

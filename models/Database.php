@@ -5,8 +5,8 @@ class Database{
     function __construct(){
         $servername = "localhost";//host vd : 255.123.45.21
         $username = "root";   // ten dang nhap
-        $password = "";    // mat khau rong
-        $dbname = "shops";   // db muon ket noi
+        $password = "12345678";    // mat khau
+        $dbname = "manager";   // db muon ket noi
 
         // Tao ra ket noi den CSDL connection
         $this->conn = new mysqli($servername, $username, $password, $dbname);

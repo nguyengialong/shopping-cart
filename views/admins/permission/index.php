@@ -187,54 +187,35 @@ include('views/admins/layouts/header.php');
         <div class="container-fluid">
 
             <!-- Page Heading -->
-            <h3 class="text-center">--- Danh sách sản phẩm ---</h3>
+            <h3 class="text-center">--- List Permission ---</h3>
             <div class="col-6">
-                <a href="?view=admin&act=add_product" class="btn" style="background-color:#2e59d9;color:white; ">Thêm mới sản phẩm</a>
+                <a href="?view=admin&act=add_permission" class="btn" style="background-color:#2e59d9;color:white; ">Add Permission</a>
             </div>
-            <br>
 
             <!-- DataTales Example -->
-            <div class="card shadow mb-4 table-responsive-lg">
+            <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Bảng sản phẩm</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Table permission</h6>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" >
+                    <div class="table-responsive-lg">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                             <tr>
                                 <th>Tên</th>
-                                <th>Hình ảnh</th>
-                                <th>Mô tả</th>
-                                <th>Giá</th>
-                                <th>Giá sale</th>
-                                <th>Chiết khấu</th>
-                                <th>Size</th>
-                                <th>Loại sản phẩm</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-
-                            <?php foreach ($products as $value) {?>
-
+                            <?php foreach ($listPermission as $value) {?>
                                 <tr>
                                     <td><?= $value['name'] ?></td>
-                                    <td><img src="public/uploads/images/<?= $value['image'] ?>" alt="" width="90px" height="90px"></td>
-                                    <td><?= $value['description'] ?></td>
-                                    <td><?= number_format($value['price'])?>VND</td>
-                                    <td><?= $value['sale_price'] ?></td>
-                                    <td><?= $value['discount_percent'] ?></td>
-                                    <td><?= $value['size'] ?></td>
+
                                     <td>
-                                        <?php foreach ($categories as $cate) {?>
-                                        <?php if ($cate['id'] == $value['category_id'])  echo $cate['name']?>
-                                        <?php }?>
+                                        <a href="?view=admin&act=edit_permission&id=<?=$value['id']?>" class="btn btn-success"><i class="fas fa-pen"></i></a>
+                                        <a href="?view=admin&act=delete_permission&id=<?=$value['id']?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                     </td>
-                                    <td>
-                                        <a href="?view=admin&act=edit_product&id=<?=$value['id']?>" class="btn btn-success"><i class="fas fa-pen"></i></a>
-                                        <a href="?view=admin&act=delete_product&id=<?=$value['id']?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                                    </td>
+
                                 </tr>
                             <?php } ?>
                             </tbody>
@@ -250,7 +231,6 @@ include('views/admins/layouts/header.php');
     <!-- End of Main Content -->
 
     <!-- Footer -->
-
-<?php
-include('views/admins/layouts/footer.php');
-?>
+    <?php
+    include('views/admins/layouts/footer.php');
+    ?>

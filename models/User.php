@@ -47,16 +47,42 @@ class User
     }
 
      function Register_User($data){
+
         $query = "INSERT INTO users (name,email,password,status,created_at,phone,address,role)
 		VALUES ('".$data['name']."','".$data['email']."','".$data['password']."','".$data['status']."',
 		'".$data['created_at']."','".$data['phone']."','".$data['address']."','".$data['role']."')";
          return $this->conn->query($query);
      }
 
+    function insert($data){
+
+        $query = "INSERT INTO users (name,email,password,created_at,phone,address)
+		VALUES ('".$data['name']."','".$data['email']."','".$data['password']."',
+		'".$data['created_at']."','".$data['phone']."','".$data['address']."')";
+        return $this->conn->query($query);
+    }
     function deleteUser($id){
 
         $query = "DELETE FROM users WHERE id = ".$id." ";
 
+        return $this->conn->query($query);
+    }
+
+    function edit($id){
+
+        $query = "SELECT * FROM users WHERE id = ".$id." ";
+        $result = $this->conn->query($query);
+        $user = array();
+        while ($row = $result->fetch_assoc()) {
+            $user[] = $row;
+        }
+        return $user;
+    }
+
+    function update($data,$id){
+
+        $query = "UPDATE users SET name = '".$data['name']."',email = '".$data['email']."',
+        phone = '".$data['phone']."',address = '".$data['address']."',created_at = '".$data['created_at']."',update_at = '".$data['update_at']."' WHERE id = ".$id;
         return $this->conn->query($query);
     }
 
