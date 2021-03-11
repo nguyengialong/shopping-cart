@@ -53,7 +53,7 @@ class RoleController{
         $data = [
             'name' => $_POST['name'],
             'created_at' => date("Y-m-d H:i:s"),
-            'update_at' => date("Y-m-d H:i:s"),
+            'updated_at' => date("Y-m-d H:i:s"),
         ];
 
 
