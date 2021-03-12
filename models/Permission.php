@@ -52,9 +52,9 @@ class Permission{
         return $permission;
     }
 
-    function update($data,$id){
+    function updatePermission($data,$id){
 
-        $query = "UPDATE permissions SET name = '".$data['name']."',created_at = '".$data['created_at']."',update_at = '".$data['update_at']."' WHERE id = ".$id;
+        $query = "UPDATE permissions SET name = '".$data['name']."',created_at = '".$data['created_at']."',updated_at = '".$data['update_at']."' WHERE id = ".$id;
         return $this->conn->query($query);
     }
 

@@ -59,7 +59,7 @@ class PermissionController{
 
         ];
 
-        $permission = $this->permission->update($data, $id);
+        $permission = $this->permission->updatePermission($data, $id);
         header('Location: index.php?view=admin&act=list_permission');
 
     }

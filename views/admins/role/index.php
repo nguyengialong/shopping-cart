@@ -191,7 +191,7 @@ include('views/admins/layouts/header.php');
             <div class="col-6">
                 <a href="?view=admin&act=add_role" class="btn" style="background-color:#2e59d9;color:white; ">Add Role</a>
             </div>
-
+            <br>
 
             <!-- DataTales Example -->
             <div class="card shadow mb-4">

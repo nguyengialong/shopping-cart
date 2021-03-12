@@ -191,11 +191,11 @@ include('views/admins/layouts/header.php');
 
             <!-- Page Heading -->
             <div class="container">
-                <h3 align="center">Add User</h3>
+                <h3 align="center">Edit User</h3>
 
                 <hr>
 
-                <form class="user" method="POST" action="?view=admin&act=update_user">
+                <form class="user" method="POST" action="?view=admin&act=update_user&&id=<?= $data[0]['id'] ?>">
                     <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
                             <input type="text" name = "name" value="<?= $data[0]['name'] ?>" class="form-control form-control-user" id="exampleFirstName" placeholder=" Tên: " required="required">

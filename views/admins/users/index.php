@@ -191,7 +191,7 @@ include('views/admins/layouts/header.php');
             <div class="col-6">
                 <a href="?view=admin&act=add_user" class="btn" style="background-color:#2e59d9;color:white; ">Add User</a>
             </div>
-
+            <br>
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -221,6 +221,7 @@ include('views/admins/layouts/header.php');
                                     <td><?= $value['address'] ?></td>
                                     <td><?= $value['created_at'] ?></td>
                                     <td>
+                                        <a href="?view=admin&act=edit_user&id=<?=$value['id']?>" class="btn btn-success"><i class="fas fa-pen"></i></a>
                                         <a href="?view=admin&act=delete_user&id=<?=$value['id']?>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>

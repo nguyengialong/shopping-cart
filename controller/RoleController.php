@@ -26,12 +26,13 @@ class RoleController{
     public function store_role()
     {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
-        $data = [
 
+        $data = [
             'name' => $_POST['name'],
             'created_at' => date("Y-m-d H:i:s"),
-
         ];
+
+
         $new_role = $this->role->insert($data);
         header("Location: ?view=admin&act=list_role");
     }
@@ -46,6 +47,7 @@ class RoleController{
     public function update_role()
     {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
+
         $id = $_GET['id'];
 
         $data = [
@@ -54,7 +56,9 @@ class RoleController{
             'updated_at' => date("Y-m-d H:i:s"),
         ];
 
-        $role = $this->role->update($data, $id);
+
+        $role =  $this->role->updateRole($data,$id);
+
         header('Location: index.php?view=admin&act=list_role');
 
     }

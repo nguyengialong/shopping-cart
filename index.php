@@ -102,6 +102,9 @@ switch ($mod) {
             case'list_user':
                 $admin_controller->list_user();
                 break;
+            case'add_user':
+                $admin_controller->add_user();
+                break;
             case 'list_customer':
                 $admin_controller->list_customer();
                 break;

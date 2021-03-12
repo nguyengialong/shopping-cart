@@ -194,12 +194,13 @@ include('views/admins/layouts/header.php');
                 <h3 align="center">Thêm mới Permission</h3>
 
                 <hr>
-                <form action="?view=admin&act=add_process" method="POST" role="form" enctype="multipart/form-data">
+
+                <form action="?view=admin&act=store_permission" method="POST" role="form" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="">Tên permission</label>
-                        <input type="text" class="form-control" id="title" placeholder="" name="name">
+                        <input type="text" class="form-control" id="title" placeholder="" name="name" required>
                     </div>
-
+                    <button type="submit" class="btn" style="background-color:#2e59d9; color: white">Thêm mới</button>
 
                 </form>
             </div>

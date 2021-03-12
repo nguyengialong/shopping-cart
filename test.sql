@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : project
+Source Server         : mydb
 Source Server Version : 50505
 Source Host           : localhost:3306
-Source Database       : shops
+Source Database       : test
 
 Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2020-07-09 10:14:57
+Date: 2021-03-11 22:13:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `categories` (
   `created_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   `update_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of categories
@@ -73,6 +73,8 @@ INSERT INTO `categories` VALUES ('10', 'Áo thun', 'p1.jpg', '0', '2020-07-02 08
 INSERT INTO `categories` VALUES ('11', 'Quần ', 'q_1.webp', '0', '2020-07-03 12:37:51', '2020-07-03 12:37:51');
 INSERT INTO `categories` VALUES ('12', 'Đầm', 'd_1.webp', '0', '2020-07-02 09:01:53', null);
 INSERT INTO `categories` VALUES ('13', 'Áo khoác', '3046028800_6_1_1.webp', '0', '2020-07-02 09:03:23', null);
+INSERT INTO `categories` VALUES ('18', 'add user', '', '0', '2021-03-11 22:02:14', null);
+INSERT INTO `categories` VALUES ('19', 'add user', '', '0', '2021-03-11 22:03:05', null);
 
 -- ----------------------------
 -- Table structure for customer
@@ -94,6 +96,37 @@ CREATE TABLE `customer` (
 -- Records of customer
 -- ----------------------------
 INSERT INTO `customer` VALUES ('1', 'nguyễn gia long', 'Nam', 'nguyengialong9x@gmail.com', 'đại mỗ', '989458598', '2020-07-09 10:02:22', null);
+
+-- ----------------------------
+-- Table structure for model_has_role
+-- ----------------------------
+DROP TABLE IF EXISTS `model_has_role`;
+CREATE TABLE `model_has_role` (
+  `role_id` int(10) NOT NULL,
+  `user_id` int(10) NOT NULL,
+  PRIMARY KEY (`role_id`,`user_id`),
+  CONSTRAINT `model_has_role_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of model_has_role
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for permissions
+-- ----------------------------
+DROP TABLE IF EXISTS `permissions`;
+CREATE TABLE `permissions` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of permissions
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for products
@@ -144,6 +177,41 @@ INSERT INTO `products` VALUES ('49', 'ÁO GI LÊ CÀI KHUY ĐÔI VẢI COTTON CO
 INSERT INTO `products` VALUES ('51', 'ÁO PHÔNG TRANG TRÍ HÌNH CHUỘT MICKEY © DISNEY', '10', 'Áo phông cổ tròn, cộc tay. In họa tiết khác màu hình nhân vật Chuột Mickey ©Disney.', '599000', '0', '0', 't2.webp', '2020-07-07 14:28:49', null, 'XS,S,M,L', 't2_1.webp');
 
 -- ----------------------------
+-- Table structure for roles
+-- ----------------------------
+DROP TABLE IF EXISTS `roles`;
+CREATE TABLE `roles` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of roles
+-- ----------------------------
+INSERT INTO `roles` VALUES ('1', 'admin', '2021-03-11 21:42:26', '2021-03-11 21:42:29');
+INSERT INTO `roles` VALUES ('3', 'users', '2021-03-11 22:12:06', '0000-00-00 00:00:00');
+
+-- ----------------------------
+-- Table structure for role_has_permission
+-- ----------------------------
+DROP TABLE IF EXISTS `role_has_permission`;
+CREATE TABLE `role_has_permission` (
+  `role_id` int(10) NOT NULL,
+  `permission_id` int(10) NOT NULL,
+  PRIMARY KEY (`role_id`,`permission_id`),
+  KEY `permission_id` (`permission_id`),
+  CONSTRAINT `role_has_permission_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `role_has_permission_ibfk_2` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of role_has_permission
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for users
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
@@ -159,7 +227,7 @@ CREATE TABLE `users` (
   `address` varchar(200) DEFAULT '',
   `role` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
