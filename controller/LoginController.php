@@ -4,6 +4,10 @@
  */
 
 require_once('models/User.php');
+require_once ('models/Role.php');
+require_once ('models/Permission.php');
+require_once ('models/Model_has_Role.php');
+require_once ('models/Role_has_Permission.php');
 class LoginController
 {
 
@@ -25,8 +29,11 @@ class LoginController
         $data['password'] = $_POST['password'];
         $user = new user();
         $result = $user->getUser($data);
+
         if ($result!=null) {
+
             $_SESSION['user'] = $result;
+
             $_SESSION['islogin'] = 1;
             if($_SESSION['user']['role'] == 1){
                 header('Location: ?view=admin&act=index');

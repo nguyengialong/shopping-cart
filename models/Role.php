@@ -31,7 +31,10 @@ class Role{
         $query = "INSERT INTO roles (name,created_at)
 		VALUES ('".$data['name']."','".$data['created_at']."')";
 
-        return $this->conn->query($query);
+        $this->conn->query($query);
+
+        return $this->conn->insert_id;
+
     }
 
     function delete($id){
@@ -54,10 +57,10 @@ class Role{
 
     function updateRole($data,$id){
 
-
         $query = "UPDATE roles SET name = '".$data['name']."',
                         created_at = '".$data['created_at']."',updated_at = '".$data['updated_at']."' WHERE id = ".$id;
-         return var_dump($this->conn->query($query));
+
+         return $this->conn->query($query);
 
 
     }

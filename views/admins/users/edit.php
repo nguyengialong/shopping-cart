@@ -211,6 +211,23 @@ include('views/admins/layouts/header.php');
                         <input type="email" name = "email" value="<?= $data[0]['email'] ?>" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address:" required="required">
                     </div>
 
+                    <div class="form-group">
+                        <label for="">Role</label>
+                        <select class="form-control" id=""  name="role">
+                            <?php foreach ($allRole as $value) {?>
+                                <option value="<?=$value['id']?>"
+                                    <?php foreach ($userHasRole as $item) :?>
+
+                                        <?php if($value['id'] == $item['role_id']):?>
+                                            selected
+                                        <?php endif;?>
+                                    <?php endforeach;?>
+                                > <?= $value['name']?></option>
+
+                            <?php }?>
+                        </select>
+                    </div>
+
                     <div class="form-group row">
                         <?php
                         if(isset($_SESSION['error'])){

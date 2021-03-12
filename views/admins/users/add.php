@@ -211,6 +211,14 @@ include('views/admins/layouts/header.php');
                     <div class="form-group">
                         <input type="email" name = "email"  class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address:" required="required">
                     </div>
+                    <div class="form-group">
+                        <label for="">Role</label>
+                        <select class="form-control" id=""  name="role">
+                            <?php foreach ($allRole as $value) {?>
+                                <option value="<?=$value['id']?>"><?= $value['name']?></option>
+                            <?php }?>
+                        </select>
+                    </div>
 
                     <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">

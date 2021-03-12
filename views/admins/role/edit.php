@@ -195,10 +195,35 @@ include('views/admins/layouts/header.php');
 
                 <hr>
                 <form action="?view=admin&act=update_role&&id=<?= $data[0]['id'] ?>" method="POST" role="form" enctype="multipart/form-data">
+
                     <div class="form-group">
                         <label for="">Tên role</label>
                         <input type="text" class="form-control" id="title" placeholder="" name="name" value="<?= $data[0]['name'] ?>">
                     </div>
+
+                    <div data-init-function="bpFieldInitChecklist" class="form-group col-sm-12" element="div" data-initialized="true">    <label><b>Permissions</b></label>
+                        <div class="row">
+                            <?php if($listPremission):?>
+                                <?php foreach ($listPremission as $item) :?>
+                                    <div class="col-sm-4">
+                                        <div class="checkbox">
+                                            <label class="font-weight-normal">
+                                                <input type="checkbox" value="<?=$item['id']?>" name="permissions[]"
+                                                    <?php foreach ($rhp as $value) :?>
+                                                         <?php if($item['id'] == $value['permission_id']):?>
+                                                                checked
+                                                        <?php endif;?>
+                                                    <?php endforeach;?>
+                                                >
+                                                <?=$item['name']?>
+                                            </label>
+                                        </div>
+                                    </div>
+                                <?php endforeach;?>
+                            <?php endif;?>
+                        </div>
+                    </div>
+
                     <button type="submit" class="btn" style="background-color:#2e59d9; color: white">Update</button>
                 </form>
             </div>

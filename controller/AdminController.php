@@ -3,12 +3,18 @@ require_once('models/Category.php');
 require_once ('models/Product.php');
 require_once ('models/User.php');
 require_once ('models/Customer.php');
+require_once ('models/Role.php');
+require_once ('models/Model_has_Role.php');
+
+
 class AdminController
 {
     public $category;
     public $product;
     public $user;
     public $customer;
+    public $role;
+    public $userRole;
     public function __construct()
     {
 
@@ -16,6 +22,8 @@ class AdminController
         $this->product = new Product();
         $this->user = new User();
         $this->customer = new Customer();
+        $this->role = new Role();
+        $this->userRole = new Model_has_Role();
 
     }
 
@@ -160,6 +168,7 @@ class AdminController
     {
         $id = $_GET['id'];
         $this->product->delete($id);
+
         header('Location: ?view=admin&act=list_product');
 
 
@@ -180,12 +189,13 @@ class AdminController
     {
         $id = $_GET['id'];
         $this->user->deleteUser($id);
+//        $this->userRole->deleteUR($id);
         header('Location: ?view=admin&act=list_user');
 
     }
 
     public function add_user(){
-
+        $allRole = $this->role->all();
         require_once ('views/admins/users/add.php');
     }
 
@@ -203,7 +213,11 @@ class AdminController
             'created_at' => date("Y-m-d H:i:s"),
             'update_at' => date("Y-m-d H:i:s"),
         ];
-        $this->user->insert($data);
+
+        $role = $_POST['role'];
+
+        $id = $this->user->insert($data);
+        $addrole = $this->userRole->insertUR($id,$role);
         header("Location: ?view=admin&act=list_user");
     }
 
@@ -211,6 +225,8 @@ class AdminController
 
         $id = $_GET['id'];
         $data = $this->user->edit($id);
+        $allRole = $this->role->all();
+        $userHasRole = $this->userRole->getRoleUser($id);
         require_once ('views/admins/users/edit.php');
     }
 
@@ -222,7 +238,6 @@ class AdminController
 
 
         $data = [
-
             'name' => $_POST['name'],
             'email' => $_POST['email'],
             'address' => $_POST['address'],
@@ -230,10 +245,10 @@ class AdminController
             'created_at' => date("Y-m-d H:i:s"),
             'update_at' => date("Y-m-d H:i:s"),
         ];
-
-
+        $role = $_POST['role'];
 
         $user = $this->user->update($data, $id);
+        $updateRole = $this->userRole->updateUR($id,$role);
         header('Location: index.php?view=admin&act=list_user');
     }
 

@@ -59,7 +59,10 @@ class User
         $query = "INSERT INTO users (name,email,password,created_at,phone,address)
 		VALUES ('".$data['name']."','".$data['email']."','".$data['password']."',
 		'".$data['created_at']."','".$data['phone']."','".$data['address']."')";
-        return $this->conn->query($query);
+
+        $this->conn->query($query);
+
+        return $this->conn->insert_id;
     }
     function deleteUser($id){
 
