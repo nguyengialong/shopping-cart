@@ -2,6 +2,7 @@
 require_once ('models/Permission.php');
 
 class PermissionController{
+
     public $permission;
 
     public function __construct()
@@ -13,6 +14,7 @@ class PermissionController{
     public function list_permission()
     {
         $listPermission = $this->permission->all();
+
         require_once('views/admins/permission/index.php');
     }
 
@@ -53,7 +55,7 @@ class PermissionController{
 
             'name' => $_POST['name'],
             'created_at' => date("Y-m-d H:i:s"),
-            'update_at' => date("Y-m-d H:i:s"),
+            'updated_at' => date("Y-m-d H:i:s"),
 
         ];
 
@@ -69,6 +71,8 @@ class PermissionController{
         header('Location: ?view=admin&act=list_permission');
 
     }
+
+
 
 
 
