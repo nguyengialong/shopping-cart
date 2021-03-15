@@ -49,12 +49,14 @@ switch ($mod) {
         require_once('controller/AdminController.php');
         require_once('controller/RoleController.php');
         require_once('controller/PermissionController.php');
+        require_once ('controller/ImportExcelController.php');
         include_once('middleware/check.php');
         $check = new Middleware();
         $check->checklogin();
         $admin_controller = new AdminController();
         $role_controller = new RoleController();
         $permission_controller = new PermissionController();
+        $importExcel = new ImportExcelController();
         switch ($act) {
             case 'index':
                 $admin_controller->index();
@@ -168,10 +170,21 @@ switch ($mod) {
             case '403':
                 $permission_controller->error403();
                 break;
+            // import excel
+            case 'importForm':
+                $importExcel->index();
+                break;
+            case 'importFile':
+                $importExcel->importFile();
+                break;
+            case 'exportExcel':
+                $importExcel->Export();
+                break;
+
 
             default:
 
-                break;
+             break;
         }
         break;
     //end

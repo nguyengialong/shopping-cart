@@ -4,27 +4,24 @@
  */
 
 require_once('models/User.php');
-//require_once ('models/Role.php');
-//require_once ('models/Permission.php');
-//require_once ('models/Model_has_Role.php');
-//require_once ('models/Role_has_Permission.php');
+require_once ('controller/CheckPermissionController.php');
 
 class LoginController
 {
-
+    public $checkPermission;
 //    public $modelHasRole;
 //    public $roleHasPermission;
 //    public $permission;
-//
-//    public function __construct()
-//    {
-//
+
+    public function __construct()
+    {
+        $this->checkPermission = new CheckPermissionController();
 //
 //        $this->modelHasRole = new Model_has_Role();
 //        $this->roleHasPermission = new Role_has_Permission();
 //        $this->permission = new Permission();
-//
-//    }
+
+    }
 
     function form(){
 
@@ -48,17 +45,18 @@ class LoginController
 
 
         if ($result!=null) {
-//            $role = $this->modelHasRole->getRoleUser($result['id']);
-//            $permission_id = $this->roleHasPermission->RgetP($role[0]['role_id']);
-//            $allPermission = [];
-//            foreach ($permission_id as $value){
-//                $name_per = $this->permission->getPermission($value['permission_id']);
-//                array_push($allPermission,$name_per[0]['name']);
-//            }
+
             $_SESSION['user'] = $result;
 //            $_SESSION['permission'] = $allPermission;
             $_SESSION['islogin'] = 1;
-            header('Location: ?view=admin&act=index');
+            $per = 'manager page';
+            $check = $this->checkPermission->CheckPer($per);
+            if($check){
+                header('Location: ?view=admin&act=index');
+            }else{
+                header('Location: ?view=&act=');
+            }
+
 
 
         }else{
