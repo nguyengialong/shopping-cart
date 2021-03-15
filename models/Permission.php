@@ -58,6 +58,20 @@ class Permission{
         return $this->conn->query($query);
     }
 
+    function getPermission($id){
+        $data = array();
+
+        $query = "SELECT name FROM permissions  WHERE id = ".$id ;
+
+        $result = $this->conn->query($query);
+
+        while ($row = $result->fetch_assoc()) {
+
+            $data[] =$row;
+        }
+        return $data;
+    }
+
 
 }
 ?>

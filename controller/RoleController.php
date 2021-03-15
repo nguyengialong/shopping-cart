@@ -2,19 +2,20 @@
 require_once ('models/Role.php');
 require_once ('models/Permission.php');
 require_once ('models/Role_has_Permission.php');
-
+require_once ('controller/CheckPermissionController.php');
 class RoleController{
 
     public $role;
     public $permission;
     public $role_permission;
-
+    public $checkPermission;
     public function __construct()
     {
 
         $this->role = new Role();
         $this->permission = new Permission();
         $this->role_permission = new Role_has_Permission();
+        $this->checkPermission = new CheckPermissionController();
 
 
     }
@@ -27,22 +28,36 @@ class RoleController{
 
     public function add_role()
     {
-        $allPermission = $this->permission->all();
-        require_once('views/admins/role/add.php');
+        $per = 'add role';
+        $check =  $this->checkPermission->CheckPer($per);
+        if($check){
+            $allPermission = $this->permission->all();
+            require_once('views/admins/role/add.php');
+        }else{
+            header('Location: ?view=admin&act=403');
+        }
+
+
+
+
     }
 
     public function store_role()
     {
-        date_default_timezone_set('Asia/Ho_Chi_Minh');
 
-        $data = [
-            'name' => $_POST['name'],
-            'created_at' => date("Y-m-d H:i:s"),
-        ];
+        $per = 'add role';
+        $check =  $this->checkPermission->CheckPer($per);
+        if($check){
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
 
-        $permission = [
-          'permission' => $_POST['permissions']
-        ];
+            $data = [
+                'name' => $_POST['name'],
+                'created_at' => date("Y-m-d H:i:s"),
+            ];
+
+            $permission = [
+                'permission' => $_POST['permissions']
+            ];
 
             $id_role = $this->role->insert($data);
             $i = 0;
@@ -55,62 +70,101 @@ class RoleController{
                 $i++;
             }
 
-        header("Location: ?view=admin&act=list_role");
+            header("Location: ?view=admin&act=list_role");
+        }else{
+            header('Location: ?view=admin&act=403');
+        }
+
+
+
     }
 
     public function edit_role()
     {
-        $id = $_GET['id'];
-        $data = $this->role->edit($id);
-        $rhp = $this->role_permission->RgetP($id);
-        $listPremission = $this->permission->all();
-        require_once('views/admins/role/edit.php');
+        $per = 'edit role';
+        $check =  $this->checkPermission->CheckPer($per);
+        if($check){
+
+            $id = $_GET['id'];
+            $data = $this->role->edit($id);
+            $rhp = $this->role_permission->RgetP($id);
+            $listPremission = $this->permission->all();
+            require_once('views/admins/role/edit.php');
+        }else{
+            header('Location: ?view=admin&act=403');
+        }
+
+
+
+
     }
 
     public function update_role()
     {
-        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $per = 'edit role';
+        $check =  $this->checkPermission->CheckPer($per);
+        if($check){
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
 
-        $id = $_GET['id'];
-
-
-        $data = [
-            'name' => $_POST['name'],
-            'created_at' => date("Y-m-d H:i:s"),
-            'updated_at' => date("Y-m-d H:i:s"),
-        ];
-
-        $permission = [
-            'permission' => $_POST['permissions']
-        ];
+            $id = $_GET['id'];
 
 
+            $data = [
+                'name' => $_POST['name'],
+                'created_at' => date("Y-m-d H:i:s"),
+                'updated_at' => date("Y-m-d H:i:s"),
+            ];
 
-        $role =  $this->role->updateRole($data,$id);
 
-        $delete = $this->role_permission->deteleRgetP($id);
+            $permission = [
+                'permission' => $_POST['permissions']
+            ];
 
-        $i = 0;
+            $role =  $this->role->updateRole($data,$id);
 
-        foreach ($permission as $item) {
+            $delete = $this->role_permission->deteleRgetP($id);
 
-            foreach ($item as $list){
-                $role_permission = $this->role_permission->insertRP($id,$list[$i]);
+            $i = 0;
+
+            foreach ($permission as $items) {
+
+                foreach ($items as $item){
+
+                    $role_permission = $this->role_permission->insertRP($id,$item);
+
+                }
+                $i++;
             }
-            $i++;
+
+            header('Location: index.php?view=admin&act=list_role');
+        }else{
+            header('Location: ?view=admin&act=403');
         }
 
-        header('Location: index.php?view=admin&act=list_role');
 
     }
 
     public function delete_role()
     {
-        $id = $_GET['id'];
-        $this->role->delete($id);
-        header('Location: ?view=admin&act=list_role');
+        $per = 'delete role';
+        $check =  $this->checkPermission->CheckPer($per);
+        if($check){
+
+            $id = $_GET['id'];
+            $this->role->delete($id);
+            header('Location: ?view=admin&act=list_role');
+        }else{
+            header('Location: ?view=admin&act=403');
+        }
+
+
+
     }
 
+
+    function error403(){
+        require_once('views/admins/403.php');
+    }
 
 
 

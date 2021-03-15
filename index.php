@@ -120,7 +120,9 @@ switch ($mod) {
             case 'delete_user':
                 $admin_controller->delete_user();
                 break;
-
+            case '403':
+                $admin_controller->error403();
+                break;
 
                 //role
             case 'list_role':
@@ -141,6 +143,9 @@ switch ($mod) {
             case 'delete_role':
                 $role_controller->delete_role();
                 break;
+            case '403':
+                $role_controller->error403();
+                break;
                 //permission
             case 'list_permission':
                 $permission_controller->list_permission();
@@ -159,6 +164,9 @@ switch ($mod) {
                 break;
             case 'delete_permission':
                 $permission_controller->delete_permission();
+                break;
+            case '403':
+                $permission_controller->error403();
                 break;
 
             default:

@@ -5,6 +5,8 @@ require_once ('models/User.php');
 require_once ('models/Customer.php');
 require_once ('models/Role.php');
 require_once ('models/Model_has_Role.php');
+require_once ('controller/CheckPermissionController.php');
+
 
 
 class AdminController
@@ -15,6 +17,8 @@ class AdminController
     public $customer;
     public $role;
     public $userRole;
+    public $checkPermission;
+
     public function __construct()
     {
 
@@ -24,17 +28,21 @@ class AdminController
         $this->customer = new Customer();
         $this->role = new Role();
         $this->userRole = new Model_has_Role();
-
+        $this->checkPermission = new CheckPermissionController();
     }
+
+
 
 
     public function index()
     {
+
         require_once('views/admins/index.php');
     }
 
     public function list_category()
     {
+
         $categories = $this->category->all();
 
 
@@ -174,6 +182,8 @@ class AdminController
 
     }
 
+
+
     public function list_user(){
         $users = $this->user->all();
         require_once ('views/admins/users/index.php');
@@ -187,69 +197,132 @@ class AdminController
 
     public function delete_user()
     {
-        $id = $_GET['id'];
-        $this->user->deleteUser($id);
+
+        $per = 'delete user';
+        $check =  $this->checkPermission->CheckPer($per);
+
+        if($check){
+            $id = $_GET['id'];
+            $this->user->deleteUser($id);
 //        $this->userRole->deleteUR($id);
-        header('Location: ?view=admin&act=list_user');
+            header('Location: ?view=admin&act=list_user');
+        }else{
+            header('Location: ?view=admin&act=403');
+        }
+
+
+
+
 
     }
 
     public function add_user(){
-        $allRole = $this->role->all();
-        require_once ('views/admins/users/add.php');
+
+        $per = 'add user';
+        $check =  $this->checkPermission->CheckPer($per);
+
+        if($check){
+            $allRole = $this->role->all();
+            require_once ('views/admins/users/add.php');
+        }else{
+            header('Location: ?view=admin&act=403');
+        }
+
+
+
+
+
     }
 
     public function store_user(){
 
-        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $per = 'add user';
 
-        $data = [
+        $check =  $this->checkPermission->CheckPer($per);
 
-            'name' => $_POST['name'],
-            'phone' => $_POST['phone'],
-            'address' => $_POST['address'],
-            'email' => $_POST['email'],
-            'password' => $_POST['password'],
-            'created_at' => date("Y-m-d H:i:s"),
-            'update_at' => date("Y-m-d H:i:s"),
-        ];
+        if($check)
+        {
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
 
-        $role = $_POST['role'];
+            $data = [
 
-        $id = $this->user->insert($data);
-        $addrole = $this->userRole->insertUR($id,$role);
-        header("Location: ?view=admin&act=list_user");
+                'name' => $_POST['name'],
+                'phone' => $_POST['phone'],
+                'address' => $_POST['address'],
+                'email' => $_POST['email'],
+                'password' => $_POST['password'],
+                'created_at' => date("Y-m-d H:i:s"),
+                'update_at' => date("Y-m-d H:i:s"),
+            ];
+
+            $role = $_POST['role'];
+
+            $id = $this->user->insert($data);
+            $addrole = $this->userRole->insertUR($id,$role);
+            header("Location: ?view=admin&act=list_user");
+        }else{
+            header('Location: ?view=admin&act=403');
+        }
+
+
+
     }
 
     public function edit_user(){
 
-        $id = $_GET['id'];
-        $data = $this->user->edit($id);
-        $allRole = $this->role->all();
-        $userHasRole = $this->userRole->getRoleUser($id);
-        require_once ('views/admins/users/edit.php');
+        $per = 'edit user';
+        $check =  $this->checkPermission->CheckPer($per);
+
+        if($check){
+
+            $id = $_GET['id'];
+            $data = $this->user->edit($id);
+            $allRole = $this->role->all();
+            $userHasRole = $this->userRole->getRoleUser($id);
+            require_once ('views/admins/users/edit.php');
+        }else{
+            header('Location: ?view=admin&act=403');
+        }
+
+
+
     }
 
     public function update_user(){
 
-        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $per = 'edit user';
+        $check =  $this->checkPermission->CheckPer($per);
 
-        $id = $_GET['id'];
+        if($check){
+
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+            $id = $_GET['id'];
 
 
-        $data = [
-            'name' => $_POST['name'],
-            'email' => $_POST['email'],
-            'address' => $_POST['address'],
-            'phone' => $_POST['phone'],
-            'created_at' => date("Y-m-d H:i:s"),
-            'update_at' => date("Y-m-d H:i:s"),
-        ];
-        $role = $_POST['role'];
+            $data = [
+                'name' => $_POST['name'],
+                'email' => $_POST['email'],
+                'address' => $_POST['address'],
+                'phone' => $_POST['phone'],
+                'created_at' => date("Y-m-d H:i:s"),
+                'update_at' => date("Y-m-d H:i:s"),
+            ];
+            $role = $_POST['role'];
 
-        $user = $this->user->update($data, $id);
-        $updateRole = $this->userRole->updateUR($id,$role);
-        header('Location: index.php?view=admin&act=list_user');
+            $user = $this->user->update($data, $id);
+            $updateRole = $this->userRole->updateUR($id,$role);
+            header('Location: index.php?view=admin&act=list_user');
+        }else{
+            header('Location: ?view=admin&act=403');
+        }
+
+
+
+    }
+
+    function error403(){
+        require_once('views/admins/403.php');
     }
 
 

@@ -4,12 +4,27 @@
  */
 
 require_once('models/User.php');
-require_once ('models/Role.php');
-require_once ('models/Permission.php');
-require_once ('models/Model_has_Role.php');
-require_once ('models/Role_has_Permission.php');
+//require_once ('models/Role.php');
+//require_once ('models/Permission.php');
+//require_once ('models/Model_has_Role.php');
+//require_once ('models/Role_has_Permission.php');
+
 class LoginController
 {
+
+//    public $modelHasRole;
+//    public $roleHasPermission;
+//    public $permission;
+//
+//    public function __construct()
+//    {
+//
+//
+//        $this->modelHasRole = new Model_has_Role();
+//        $this->roleHasPermission = new Role_has_Permission();
+//        $this->permission = new Permission();
+//
+//    }
 
     function form(){
 
@@ -30,23 +45,34 @@ class LoginController
         $user = new user();
         $result = $user->getUser($data);
 
+
+
         if ($result!=null) {
-
+//            $role = $this->modelHasRole->getRoleUser($result['id']);
+//            $permission_id = $this->roleHasPermission->RgetP($role[0]['role_id']);
+//            $allPermission = [];
+//            foreach ($permission_id as $value){
+//                $name_per = $this->permission->getPermission($value['permission_id']);
+//                array_push($allPermission,$name_per[0]['name']);
+//            }
             $_SESSION['user'] = $result;
-
+//            $_SESSION['permission'] = $allPermission;
             $_SESSION['islogin'] = 1;
-            if($_SESSION['user']['role'] == 1){
-                header('Location: ?view=admin&act=index');
-            }else{
-                header('Location: ?view=&act=');
-            }
+            header('Location: ?view=admin&act=index');
+
 
         }else{
-
             header('Location: ?view=login&act=');
             setcookie('er_login','Email hoặc mật khẩu không đúng !',time() + 1);
-
         }
+
+
+
+
+
+
+
+
     }
 
     function register(){
@@ -57,6 +83,7 @@ class LoginController
         if($password != $re_password){
             $_SESSION['error']= "Mật khẩu không giống nhau !";
            header('Location: ?view=login&act=form_register');
+
         }else{
             unset($_SESSION['error']);
             $data = [
