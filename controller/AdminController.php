@@ -185,11 +185,12 @@ class AdminController
 
     //user
     public function list_user(){
+
         $per = 'add user';
         $check =  $this->checkPermission->CheckPer($per);
         if($check){
 //            $users = $this->user->all();
-
+            // phan trang
             if (isset($_GET['page'])) {
 
                 $page = $_GET['page'];
@@ -198,25 +199,28 @@ class AdminController
 
                 $page = 1;
             }
-
-            $no_of_records_per_page = 3;
-            $offset = ($page-1) * $no_of_records_per_page;
+            $limit_recode = 3; // hien bao nhieu ban ghi
+            $offset = ($page-1) * $limit_recode;
             $previous_page = $page - 1;
             $next_page = $page + 1;
-            $total_pages_sql = $this->user->CountUser();
-            $total_pages = ceil($total_pages_sql['total'] / $no_of_records_per_page);
-            $users = $this->user->getDataPage($offset,$no_of_records_per_page);
+            $total_pages_sql = $this->user->CountUser(); // lay ra cac ban ghi trong user
+            $total_pages = ceil($total_pages_sql['total'] / $limit_recode); // lam tron
+
+            $users = $this->user->getDataPage($offset,$limit_recode);
 
             require_once ('views/admins/users/index.php');
 
         }else{
+
             header('Location: ?view=admin&act=403');
+
         }
 
 
     }
 
     public function list_customer(){
+
         $customers = $this->customer->all();
         require_once ('views/admins/users/customer.php');
     }

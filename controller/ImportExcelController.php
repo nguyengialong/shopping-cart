@@ -28,12 +28,16 @@ class ImportExcelController{
         $per = 'manager excel';
         $check =  $this->checkPermission->CheckPer($per);
         if($check){
+
             $data = $_FILES["file"]['tmp_name'];
             $objPHPExcel =  $objPHPExcel = PHPExcel_IOFactory::load($data);
             $objWorksheet = $objPHPExcel->getActiveSheet();
             $new = [];
+
             $combineArray = [];
+
             $newArray = [];
+
             foreach ($objWorksheet->getRowIterator() as $row) {
 
                 $cellIterator = $row->getCellIterator();
@@ -74,12 +78,17 @@ class ImportExcelController{
             foreach ($newArray as $data){
 
                 $checkEmail = $this->getUser->checkEmail($data['email']);
+
                 if($checkEmail){
+
                     header('Location: ?view=admin&&act=importForm');
                     setcookie('er_import','Email is exist !',time() + 1);
+
                 }else{
+
                     $this->import->insert($data);
                     setcookie('suc_import','Import success',time() + 1);
+
                 }
 
             }
@@ -95,9 +104,12 @@ class ImportExcelController{
     }
 
     public function Export(){
+
         $per = 'manager excel';
         $check =  $this->checkPermission->CheckPer($per);
+
         if($check){
+
             $fileName = 'userExportExample.xlsx';
             $users = $this->getUser->all();;
             $objPHPExcel = new PHPExcel();
