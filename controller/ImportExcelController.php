@@ -144,10 +144,9 @@ class ImportExcelController{
             header('Location: ?view=admin&&act=index');
 
         }else{
+
             header('Location: ?view=admin&act=403');
         }
-
-
 
     }
 

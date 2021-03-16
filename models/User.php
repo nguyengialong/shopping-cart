@@ -101,6 +101,29 @@ class User
         return $email;
     }
 
+    function CountUser(){
+
+        $query =  "SELECT COUNT(*) AS total FROM users";
+        $result = $this->conn->query($query)->fetch_assoc();
+
+        return $result;
+
+    }
+    function getDataPage($offset,$no_of_records_per_page){
+        $data = array();
+
+        $query ="SELECT * FROM users LIMIT $offset, $no_of_records_per_page";
+
+        $result = $this->conn->query($query);
+
+        while ($row = $result->fetch_assoc()) {
+            $data[] =$row;
+        }
+        return $data;
+    }
+
+
+
 
 }
 ?>

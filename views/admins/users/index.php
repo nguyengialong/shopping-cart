@@ -229,6 +229,36 @@ include('views/admins/layouts/header.php');
                             </tbody>
                         </table>
                     </div>
+                    <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+
+                        <li class="page-item" <?php if($page <= 1){ echo "class='disabled'"; } ?>>
+                            <a class="page-link" <?php if($page > 1){
+                                echo "href='?view=admin&&act=list_user&&page=$previous_page'";
+                            } ?>>Previous</a>
+                        </li>
+
+                        <?php
+                        if ($total_pages){
+                            for ($counter = 1; $counter <= $total_pages; $counter++){
+                                if ($counter == $page) {
+                                    echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";
+                                }else{
+                                    echo "<li class='page-item'><a class='page-link' href='?view=admin&&act=list_user&&page=$counter'>$counter</a></li>";
+                                }
+                            }
+                        }
+                        ?>
+
+                        <li class="page-item" <?php if($page >= $total_pages){
+                            echo "class='disabled'";
+                        } ?>>
+                            <a class="page-link" <?php if($page < $total_pages) {
+                                echo "href='?view=admin&&act=list_user&&page=$next_page'";
+                            } ?>>Next</a>
+                        </li>
+                    </ul>
+                    </nav>
                 </div>
             </div>
 
