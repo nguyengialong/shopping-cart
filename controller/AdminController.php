@@ -33,13 +33,13 @@ class AdminController
 
 
 
-
+    //home
     public function index()
     {
 
         require_once('views/admins/index.php');
     }
-
+    //category
     public function list_category()
     {
 
@@ -104,7 +104,7 @@ class AdminController
 
 
     }
-
+    //product
     public function list_product()
     {
         $products = $this->product->all();
@@ -183,7 +183,7 @@ class AdminController
     }
 
 
-
+    //user
     public function list_user(){
         $users = $this->user->all();
         require_once ('views/admins/users/index.php');
@@ -209,11 +209,6 @@ class AdminController
         }else{
             header('Location: ?view=admin&act=403');
         }
-
-
-
-
-
     }
 
     public function add_user(){
@@ -227,11 +222,6 @@ class AdminController
         }else{
             header('Location: ?view=admin&act=403');
         }
-
-
-
-
-
     }
 
     public function store_user(){
@@ -256,8 +246,8 @@ class AdminController
             ];
 
             $role = $_POST['role'];
-
             $id = $this->user->insert($data);
+
             $addrole = $this->userRole->insertUR($id,$role);
             header("Location: ?view=admin&act=list_user");
         }else{

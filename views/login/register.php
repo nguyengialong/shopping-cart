@@ -48,6 +48,10 @@ include('views/login/layouts/header.php');
                                 }
                                 ?>
                             </div>
+                            <div class="form-group">
+                                <input type="hidden" name = "roles" value="31" class="form-control form-control-user">
+                            </div>
+
                             <button type="submit"  class="btn btn-primary btn-user btn-block">
                               Đăng kí
                             </button>

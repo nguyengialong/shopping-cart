@@ -2,13 +2,16 @@
 /**
  *
  */
-
 require_once('models/User.php');
+require_once ('models/Model_has_Role.php');
 require_once ('controller/CheckPermissionController.php');
 
 class LoginController
 {
     public $checkPermission;
+    public $modelHasRole;
+
+
 //    public $modelHasRole;
 //    public $roleHasPermission;
 //    public $permission;
@@ -16,6 +19,8 @@ class LoginController
     public function __construct()
     {
         $this->checkPermission = new CheckPermissionController();
+        $this->modelHasRole = new Model_has_Role();
+
 //
 //        $this->modelHasRole = new Model_has_Role();
 //        $this->roleHasPermission = new Role_has_Permission();
@@ -30,6 +35,7 @@ class LoginController
     }
 
     function form_register(){
+
         require_once('views/login/register.php');
     }
 
@@ -57,19 +63,10 @@ class LoginController
                 header('Location: ?view=&act=');
             }
 
-
-
         }else{
             header('Location: ?view=login&act=');
             setcookie('er_login','Email hoặc mật khẩu không đúng !',time() + 1);
         }
-
-
-
-
-
-
-
 
     }
 
@@ -84,6 +81,7 @@ class LoginController
 
         }else{
             unset($_SESSION['error']);
+
             $data = [
                 'name' => $_POST['name'],
                 'email' => $_POST['email'],
@@ -94,9 +92,10 @@ class LoginController
                 'address' => $_POST['address'],
                 'role' => 2,
             ];
-
+            $RoleID = $_POST['roles'];
             $user = new user();
-            $result = $user->Register_User($data);
+            $UserId = $user->Register_User($data);
+            $this->modelHasRole->insertUR($UserId,$RoleID);
             setcookie("msg", 'Đăng ký tài khoản thành công', time() + 1);
             header('Location: ?view=login&act=');
         }

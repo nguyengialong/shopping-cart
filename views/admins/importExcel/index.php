@@ -188,7 +188,25 @@ include('views/admins/layouts/header.php');
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+            <div class="alert-danger">
+                <?php
+                if(isset($_COOKIE['er_import'])){
 
+                    echo "<p style='color:#d52a1a'>" .$_COOKIE['er_import']. "</p>";
+                }
+                ?>
+            </div>
+
+            <div class=" alert-success">
+                <?php
+                if(isset($_COOKIE['suc_import'])){
+
+                    echo "<p style='color: #0f6848'>" .$_COOKIE['suc_import']. "</p>";
+
+                }
+
+                ?>
+            </div>
             <!-- Page Heading -->
             <div class="container">
                 <h3 align="center">Import Excel</h3>

@@ -25,6 +25,7 @@ class User
     }
 
     function getUser($data){
+
         $query = "SELECT * FROM users WHERE email ='".$data['email']."' AND password = '".$data['password']."'";
         // Thuc thi cau lenh truy van co so du lieu
 
@@ -35,6 +36,7 @@ class User
     }
 
     function getPassword($data){
+
         $query = "SELECT password,name,email FROM users WHERE email ='".$data."'";
         $password = $this->conn->query($query)->fetch_assoc();
         return $password;
@@ -51,7 +53,10 @@ class User
         $query = "INSERT INTO users (name,email,password,status,created_at,phone,address,role)
 		VALUES ('".$data['name']."','".$data['email']."','".$data['password']."','".$data['status']."',
 		'".$data['created_at']."','".$data['phone']."','".$data['address']."','".$data['role']."')";
-         return $this->conn->query($query);
+
+        $this->conn->query($query);
+
+        return $this->conn->insert_id;
      }
 
     function insert($data){
@@ -87,6 +92,13 @@ class User
         $query = "UPDATE users SET name = '".$data['name']."',email = '".$data['email']."',
         phone = '".$data['phone']."',address = '".$data['address']."',created_at = '".$data['created_at']."',update_at = '".$data['update_at']."' WHERE id = ".$id;
         return $this->conn->query($query);
+    }
+
+    function checkEmail($data){
+
+        $query = "SELECT email FROM users WHERE email ='".$data."'";
+        $email = $this->conn->query($query)->fetch_assoc();
+        return $email;
     }
 
 

@@ -64,7 +64,8 @@ class RoleController{
             foreach ($permission as $value) {
 
                 foreach ($value as $per){
-                    $role_permission = $this->role_permission->insertRP($id_role,$per[$i]);
+
+                    $role_permission = $this->role_permission->insertRP($id_role,$per);
                 }
 
                 $i++;
