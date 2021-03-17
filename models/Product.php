@@ -26,7 +26,7 @@ class Product{
 
     function DetailProduct($id){
 
-        $query = "SELECT * FROM products where id = ".$id."";
+        $query = "SELECT * FROM products  WHERE id = ".$id;
         // $query = "SELECT * FROM posts join categories on posts.category_id = ".$id."";
         $result = $this->conn->query($query)->fetch_assoc();
         // var_dump($result);
@@ -45,9 +45,10 @@ class Product{
     }
 
     function Cart($id){
+
         $data = array();
 
-        $query = "SELECT * FROM products where id = ".$id."";
+        $query = "SELECT * FROM products WHERE id = ".$id;
 
         $result = $this->conn->query($query)->fetch_assoc();
 
@@ -176,6 +177,32 @@ class Product{
             }
         }
 
+    }
+
+    function CountProduct(){
+
+        $query =  "SELECT COUNT(*) AS total FROM products";
+
+        $result = $this->conn->query($query)->fetch_assoc();
+
+        return $result;
+
+    }
+
+    function getDataPage($offset,$no_of_records_per_page){
+
+        $data = array();
+
+        $query ="SELECT * FROM products LIMIT $offset, $no_of_records_per_page";
+
+        $result = $this->conn->query($query);
+
+        while ($row = $result->fetch_assoc()){
+
+            $data[] =$row;
+        }
+
+        return $data;
     }
 
 }

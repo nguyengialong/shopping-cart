@@ -107,7 +107,23 @@ class AdminController
     //product
     public function list_product()
     {
-        $products = $this->product->all();
+        if (isset($_GET['pages'])) {
+
+            $page = $_GET['pages'];
+
+        } else {
+
+            $page = 1;
+        }
+
+        $limit_recode = 8; // hien bao nhieu ban ghi
+        $offset = ($page-1) * $limit_recode;
+        $previous_page = $page - 1;
+        $next_page = $page + 1;
+        $total_pages_sql = $this->product->CountProduct(); // lay ra cac ban ghi trong user
+        $total_pages = ceil($total_pages_sql['total'] / $limit_recode); // lam tron
+        $products = $this->product->getDataPage($offset,$limit_recode);
+        //        $products = $this->product->all();
         $categories = $this->category->all();
         require_once('views/admins/products/index.php');
 

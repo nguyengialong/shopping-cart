@@ -30,8 +30,8 @@ class PermissionController{
         $next_page = $page + 1;
         $total_pages_sql = $this->permission->CountPermission(); // lay ra cac ban ghi trong user
         $total_pages = ceil($total_pages_sql['total'] / $limit_recode); // lam tron
-
         $listPermission = $this->permission->getDataPage($offset,$limit_recode);
+
 //        $listPermission = $this->permission->all();
 
         require_once('views/admins/permission/index.php');
