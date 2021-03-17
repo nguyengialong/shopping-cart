@@ -37,6 +37,9 @@ switch ($mod) {
             case 'new_password':
                 $login_controller -> new_password();
                 break;
+            case 'seeder':
+                $login_controller -> seeder();
+                break;
             default:
                 $login_controller ->error();
                 break;

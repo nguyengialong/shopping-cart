@@ -17,7 +17,7 @@ class ImportExcel{
         $date = date("Y-m-d H:i:s");
 
         $query = "INSERT INTO users (name,email,password,created_at,phone,address)
-		VALUES ('".$data['name']."','".$data['email']."','".'123456'."',
+		VALUES ('".$data['name']."','".$data['email']."','".md5('123456')."',
 		'".$date."','".$data['phone']."','".$data['address']."')";
 
         return  $this->conn->query($query);

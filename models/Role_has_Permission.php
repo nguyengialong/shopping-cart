@@ -20,7 +20,14 @@ require_once('models/Database.php');
              return $this->conn->query($query);
 
         }
+        public function SeederRP($role,$permission){
 
+            $query = "INSERT INTO role_has_permission (role_id,permission_id)
+		                  VALUES ('".$role."','".$permission."')";
+
+            return $this->conn->query($query);
+
+        }
         public function RgetP($id){
 
             $data = array();

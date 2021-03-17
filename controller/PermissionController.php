@@ -15,7 +15,24 @@ class PermissionController{
 
     public function list_permission()
     {
-        $listPermission = $this->permission->all();
+        if (isset($_GET['page'])) {
+
+            $page = $_GET['page'];
+
+        } else {
+
+            $page = 1;
+        }
+
+        $limit_recode = 3; // hien bao nhieu ban ghi
+        $offset = ($page-1) * $limit_recode;
+        $previous_page = $page - 1;
+        $next_page = $page + 1;
+        $total_pages_sql = $this->permission->CountPermission(); // lay ra cac ban ghi trong user
+        $total_pages = ceil($total_pages_sql['total'] / $limit_recode); // lam tron
+
+        $listPermission = $this->permission->getDataPage($offset,$limit_recode);
+//        $listPermission = $this->permission->all();
 
         require_once('views/admins/permission/index.php');
     }

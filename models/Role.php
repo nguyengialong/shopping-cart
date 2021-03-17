@@ -37,6 +37,17 @@ class Role{
 
     }
 
+    function SeederRole($data){
+
+        $query = "INSERT INTO roles (name,created_at)
+		VALUES ('".$data['name']."','".$data['created_at']."')";
+
+        $this->conn->query($query);
+
+        return $this->conn->insert_id;
+
+    }
+
     function delete($id){
 
         $query = "DELETE FROM roles WHERE id = ".$id." ";

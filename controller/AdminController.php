@@ -199,6 +199,7 @@ class AdminController
 
                 $page = 1;
             }
+
             $limit_recode = 3; // hien bao nhieu ban ghi
             $offset = ($page-1) * $limit_recode;
             $previous_page = $page - 1;
@@ -341,6 +342,7 @@ class AdminController
     }
 
     function error403(){
+
         require_once('views/admins/403.php');
     }
 

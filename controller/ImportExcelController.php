@@ -38,19 +38,19 @@ class ImportExcelController{
 
             $newArray = [];
 
-            foreach ($objWorksheet->getRowIterator() as $row) {
+            foreach ($objWorksheet->getRowIterator() as $row) { //lấy tất cả các hàng
 
-                $cellIterator = $row->getCellIterator();
+                $cellIterator = $row->getCellIterator(); // lấy tất cả các cột
 
-                $cellIterator->setIterateOnlyExistingCells(false);
+                $cellIterator->setIterateOnlyExistingCells(false); // không lặp lại các ô hiện có
 
                 $data = [];
 
                 foreach ($cellIterator as  $cell) {
 
-                    $data[] = $cell->getValue();
+                    $data[] = $cell->getValue(); // lấy giá trị các ô
 
-                    $filter = array_filter($data); // bo nhung phan tu khong co gia tri trong mang
+                    $filter = array_filter($data); // bỏ những phần tử không có giá trị trong mảng
 
 
                 }
@@ -58,7 +58,7 @@ class ImportExcelController{
                 array_push($new,$filter);
 
             }
-            array_shift($new); // xoa phan tu dau tien cua mang
+            array_shift($new); // xóa phân tử đầu tiên của mảng
 
             foreach ($new as $value){
 
@@ -68,7 +68,7 @@ class ImportExcelController{
 
                 );
 
-                $combineArray = array_combine($keys, $value); // tron mang
+                $combineArray = array_combine($keys, $value); // trộn mảng
 
                 array_shift($combineArray);
 
@@ -94,7 +94,9 @@ class ImportExcelController{
             }
 
             header('Location: ?view=admin&&act=importForm');
+
         }else{
+
             header('Location: ?view=admin&act=403');
         }
 
@@ -121,7 +123,7 @@ class ImportExcelController{
 
             $activeSheet = $objPHPExcel->setActiveSheetIndex(0);
 
-            $activeSheet->setCellValue('A1', 'id')
+            $activeSheet->setCellValue('A1', 'id') // đặt giá trị cho các ô
                 ->setCellValue('B1', 'name')
                 ->setCellValue('C1', 'email')
                 ->setCellValue('D1', 'password')

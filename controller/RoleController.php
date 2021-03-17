@@ -44,12 +44,11 @@ class RoleController{
 
     public function store_role()
     {
-
         $per = 'add role';
         $check =  $this->checkPermission->CheckPer($per);
         if($check){
-            date_default_timezone_set('Asia/Ho_Chi_Minh');
 
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
             $data = [
                 'name' => $_POST['name'],
                 'created_at' => date("Y-m-d H:i:s"),
@@ -70,14 +69,11 @@ class RoleController{
 
                 $i++;
             }
-
             header("Location: ?view=admin&act=list_role");
+
         }else{
             header('Location: ?view=admin&act=403');
         }
-
-
-
     }
 
     public function edit_role()

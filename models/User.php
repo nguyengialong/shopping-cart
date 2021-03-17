@@ -51,7 +51,7 @@ class User
      function Register_User($data){
 
         $query = "INSERT INTO users (name,email,password,status,created_at,phone,address,role)
-		VALUES ('".$data['name']."','".$data['email']."','".$data['password']."','".$data['status']."',
+		VALUES ('".$data['name']."','".$data['email']."','".md5($data['password'])."','".$data['status']."',
 		'".$data['created_at']."','".$data['phone']."','".$data['address']."','".$data['role']."')";
 
         $this->conn->query($query);
@@ -59,10 +59,21 @@ class User
         return $this->conn->insert_id;
      }
 
+    function SeederUser($data){
+
+        $query = "INSERT INTO users (name,email,password,status,created_at,phone,address,role)
+		VALUES ('".$data['name']."','".$data['email']."','".md5($data['password'])."','".$data['status']."',
+		'".$data['created_at']."','".$data['phone']."','".$data['address']."','".$data['role']."')";
+
+        $this->conn->query($query);
+
+        return $this->conn->insert_id;
+    }
+
     function insert($data){
 
         $query = "INSERT INTO users (name,email,password,created_at,phone,address)
-		VALUES ('".$data['name']."','".$data['email']."','".$data['password']."',
+		VALUES ('".$data['name']."','".$data['email']."','".md5($data['password'])."',
 		'".$data['created_at']."','".$data['phone']."','".$data['address']."')";
 
         $this->conn->query($query);
@@ -109,10 +120,10 @@ class User
         return $result;
 
     }
-    function getDataPage($offset,$no_of_records_per_page){
+    function getDataPage($offset,$limit_recode){
         $data = array();
 
-        $query ="SELECT * FROM users LIMIT $offset, $no_of_records_per_page";
+        $query ="SELECT * FROM users LIMIT $offset, $limit_recode";
 
         $result = $this->conn->query($query);
 

@@ -3,28 +3,29 @@
  *
  */
 require_once('models/User.php');
+require_once('models/Role.php');
 require_once ('models/Model_has_Role.php');
+require_once ('models/Permission.php');
+require_once ('models/Role_has_Permission.php');
 require_once ('controller/CheckPermissionController.php');
 
 class LoginController
 {
     public $checkPermission;
     public $modelHasRole;
+    public $role;
+    public $permission;
+    public $roleHasPermission;
 
 
-//    public $modelHasRole;
-//    public $roleHasPermission;
-//    public $permission;
 
     public function __construct()
     {
         $this->checkPermission = new CheckPermissionController();
+        $this->role = new Role();
         $this->modelHasRole = new Model_has_Role();
-
-//
-//        $this->modelHasRole = new Model_has_Role();
-//        $this->roleHasPermission = new Role_has_Permission();
-//        $this->permission = new Permission();
+        $this->permission = new Permission();
+        $this->roleHasPermission = new Role_has_Permission();
 
     }
 
@@ -44,16 +45,15 @@ class LoginController
     function login(){
 
         $data['email'] = $_POST['email'];
-        $data['password'] = $_POST['password'];
+
+        $data['password'] = md5($_POST['password']);
+
         $user = new user();
         $result = $user->getUser($data);
 
-
-
-        if ($result!=null) {
-
+        if ($result!=null)
+        {
             $_SESSION['user'] = $result;
-//            $_SESSION['permission'] = $allPermission;
             $_SESSION['islogin'] = 1;
             $per = 'manager page';
             $check = $this->checkPermission->CheckPer($per);
@@ -71,6 +71,7 @@ class LoginController
     }
 
     function register(){
+
 //        require_once('views/login/register.php');
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $password = $_POST['password'];
@@ -80,12 +81,14 @@ class LoginController
            header('Location: ?view=login&act=form_register');
 
         }else{
+
             unset($_SESSION['error']);
 
             $data = [
+
                 'name' => $_POST['name'],
                 'email' => $_POST['email'],
-                'password' => $password,
+                'password' => $_POST['password'],
                 'status' => 1,
                 'created_at' => date("Y-m-d H:i:s"),
                 'phone' => $_POST['phone'],
@@ -159,6 +162,74 @@ class LoginController
 //        unset($_SESSION['cart']);
         header('Location: ?view=login&act=');
     }
+
+    function seeder(){
+
+        $new_permission = [];
+
+        $createRole = [
+          'name' => 'admod',
+          'created_at' => date("Y-m-d H:i:s"),
+        ];
+
+        $id_role = $this->role->SeederRole($createRole);
+
+        $permission = [
+            'permission'=>[
+                '0'=> 'add user',
+                '1'=> 'edit user',
+                '2' => 'delete user',
+                '3' => 'add role',
+                '4' => 'edit role',
+                '5' => 'delete role',
+                '6' => 'add permission',
+                '7' => 'edit permission',
+                '8' => 'delete permission',
+                '9' => 'manager page',
+                '10' => 'manager excel',
+            ]
+        ];
+
+        $i = 0;
+        foreach ($permission as $value) {
+
+            foreach ($value as $per){
+                $date = date("Y-m-d H:i:s");
+                $id_permission = $this->permission->SeederPer($per,$date);
+                array_push($new_permission,$id_permission);
+
+            }
+            $i++;
+        }
+
+        $j=0;
+        foreach ($new_permission as $value) {
+            $role_permission = $this->roleHasPermission->SeederRP($id_role,$value);
+            $j++;
+        }
+
+        $createUser = [
+            'name' => 'admin',
+            'email' => 'boss@gmail.com',
+            'password' => '123456',
+            'status' => 1,
+            'created_at' => date("Y-m-d H:i:s"),
+            'phone' => '0234567899',
+            'address' => 'ha noi',
+            'role' => 1,
+        ];
+        $seeder_User = new user();
+        $Id_User = $seeder_User->SeederUser($createUser);
+        $UR = $this->modelHasRole->insertUR($Id_User,$id_role);
+
+        header('Location: ?view=login&act=');
+
+
+    }
+
+
+
+
 
 }
 ?>
