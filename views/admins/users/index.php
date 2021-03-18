@@ -204,7 +204,6 @@ include('views/admins/layouts/header.php');
                             <tr>
                                 <th>Tên</th>
                                 <th>Email</th>
-                                <th>Mật khẩu</th>
                                 <th>Điện thoại</th>
                                 <th>Địa chỉ</th>
                                 <th>Ngày tạo</th>
@@ -216,7 +215,6 @@ include('views/admins/layouts/header.php');
                                 <tr>
                                     <td><?= $value['name'] ?></td>
                                     <td><?= $value['email'] ?></td>
-                                    <td><?= $value['password'] ?></td>
                                     <td><?= $value['phone'] ?></td>
                                     <td><?= $value['address'] ?></td>
                                     <td><?= $value['created_at'] ?></td>
@@ -229,6 +227,7 @@ include('views/admins/layouts/header.php');
                             </tbody>
                         </table>
                     </div>
+
                     <nav aria-label="Page navigation example">
                     <ul class="pagination">
 
@@ -266,9 +265,13 @@ include('views/admins/layouts/header.php');
         <!-- /.container-fluid -->
 
     </div>
+
     <!-- End of Main Content -->
 
     <!-- Footer -->
+
 <?php
 include('views/admins/layouts/footer.php');
 ?>
+
+

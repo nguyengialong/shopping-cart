@@ -1,14 +1,17 @@
 <?php
-require_once ('models/Role.php');
-require_once ('models/Permission.php');
-require_once ('models/Role_has_Permission.php');
-require_once ('controller/CheckPermissionController.php');
-class RoleController{
+require_once('models/Role.php');
+require_once('models/Permission.php');
+require_once('models/Role_has_Permission.php');
+require_once('controller/CheckPermissionController.php');
+
+class RoleController
+{
 
     public $role;
     public $permission;
     public $role_permission;
     public $checkPermission;
+
     public function __construct()
     {
 
@@ -22,22 +25,30 @@ class RoleController{
 
     public function list_role()
     {
-        $listRole = $this->role->all();
-        require_once('views/admins/role/index.php');
+        $per = 'add role';
+        $check = $this->checkPermission->CheckPer($per);
+        if($check){
+
+            $listRole = $this->role->all();
+            require_once('views/admins/role/index.php');
+
+        }else{
+
+            header('Location: ?view=admin&act=403');
+        }
+
     }
 
     public function add_role()
     {
         $per = 'add role';
-        $check =  $this->checkPermission->CheckPer($per);
-        if($check){
+        $check = $this->checkPermission->CheckPer($per);
+        if ($check) {
             $allPermission = $this->permission->all();
             require_once('views/admins/role/add.php');
-        }else{
+        } else {
             header('Location: ?view=admin&act=403');
         }
-
-
 
 
     }
@@ -45,8 +56,8 @@ class RoleController{
     public function store_role()
     {
         $per = 'add role';
-        $check =  $this->checkPermission->CheckPer($per);
-        if($check){
+        $check = $this->checkPermission->CheckPer($per);
+        if ($check) {
 
             date_default_timezone_set('Asia/Ho_Chi_Minh');
             $data = [
@@ -62,16 +73,16 @@ class RoleController{
             $i = 0;
             foreach ($permission as $value) {
 
-                foreach ($value as $per){
+                foreach ($value as $per) {
 
-                    $role_permission = $this->role_permission->insertRP($id_role,$per);
+                    $role_permission = $this->role_permission->insertRP($id_role, $per);
                 }
 
                 $i++;
             }
             header("Location: ?view=admin&act=list_role");
 
-        }else{
+        } else {
             header('Location: ?view=admin&act=403');
         }
     }
@@ -79,19 +90,17 @@ class RoleController{
     public function edit_role()
     {
         $per = 'edit role';
-        $check =  $this->checkPermission->CheckPer($per);
-        if($check){
+        $check = $this->checkPermission->CheckPer($per);
+        if ($check) {
 
             $id = $_GET['id'];
             $data = $this->role->edit($id);
             $rhp = $this->role_permission->RgetP($id);
             $listPremission = $this->permission->all();
             require_once('views/admins/role/edit.php');
-        }else{
+        } else {
             header('Location: ?view=admin&act=403');
         }
-
-
 
 
     }
@@ -99,8 +108,8 @@ class RoleController{
     public function update_role()
     {
         $per = 'edit role';
-        $check =  $this->checkPermission->CheckPer($per);
-        if($check){
+        $check = $this->checkPermission->CheckPer($per);
+        if ($check) {
             date_default_timezone_set('Asia/Ho_Chi_Minh');
 
             $id = $_GET['id'];
@@ -117,7 +126,7 @@ class RoleController{
                 'permission' => $_POST['permissions']
             ];
 
-            $role =  $this->role->updateRole($data,$id);
+            $role = $this->role->updateRole($data, $id);
 
             $delete = $this->role_permission->deteleRgetP($id);
 
@@ -125,16 +134,16 @@ class RoleController{
 
             foreach ($permission as $items) {
 
-                foreach ($items as $item){
+                foreach ($items as $item) {
 
-                    $role_permission = $this->role_permission->insertRP($id,$item);
+                    $role_permission = $this->role_permission->insertRP($id, $item);
 
                 }
                 $i++;
             }
 
             header('Location: index.php?view=admin&act=list_role');
-        }else{
+        } else {
             header('Location: ?view=admin&act=403');
         }
 
@@ -144,29 +153,26 @@ class RoleController{
     public function delete_role()
     {
         $per = 'delete role';
-        $check =  $this->checkPermission->CheckPer($per);
-        if($check){
+        $check = $this->checkPermission->CheckPer($per);
+        if ($check) {
 
             $id = $_GET['id'];
             $this->role->delete($id);
             header('Location: ?view=admin&act=list_role');
-        }else{
+        } else {
             header('Location: ?view=admin&act=403');
         }
 
 
-
     }
 
 
-    function error403(){
+    function error403()
+    {
         require_once('views/admins/403.php');
     }
 
 
-
-
-
-
 }
+
 ?>

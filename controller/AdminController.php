@@ -1,13 +1,11 @@
 <?php
 require_once('models/Category.php');
-require_once ('models/Product.php');
-require_once ('models/User.php');
-require_once ('models/Customer.php');
-require_once ('models/Role.php');
-require_once ('models/Model_has_Role.php');
-require_once ('controller/CheckPermissionController.php');
-
-
+require_once('models/Product.php');
+require_once('models/User.php');
+require_once('models/Customer.php');
+require_once('models/Role.php');
+require_once('models/Model_has_Role.php');
+require_once('controller/CheckPermissionController.php');
 
 class AdminController
 {
@@ -32,13 +30,179 @@ class AdminController
     }
 
 
-
     //home
     public function index()
     {
 
         require_once('views/admins/index.php');
     }
+
+    //user
+    public function list_user()
+    {
+
+        $per = 'add user';
+        $check = $this->checkPermission->CheckPer($per);
+        if ($check) {
+//            $users = $this->user->all();
+            // phan trang
+            if (isset($_GET['page'])) {
+
+                $page = $_GET['page'];
+
+            } else {
+
+                $page = 1;
+            }
+
+            $limit_recode = 3; // hien bao nhieu ban ghi
+            $offset = ($page - 1) * $limit_recode;
+            $previous_page = $page - 1;
+            $next_page = $page + 1;
+            $total_pages_sql = $this->user->CountUser(); // lay ra cac ban ghi trong user
+            $total_pages = ceil($total_pages_sql['total'] / $limit_recode); // lam tron
+
+            $users = $this->user->getDataPage($offset, $limit_recode);
+
+            require_once('views/admins/users/index.php');
+
+        } else {
+
+            header('Location: ?view=admin&act=403');
+
+        }
+
+
+    }
+
+    public function delete_user()
+    {
+
+        $per = 'delete user';
+        $check = $this->checkPermission->CheckPer($per);
+
+        if ($check) {
+            $id = $_GET['id'];
+            $this->user->deleteUser($id);
+//        $this->userRole->deleteUR($id);
+            header('Location: ?view=admin&act=list_user');
+        } else {
+            header('Location: ?view=admin&act=403');
+        }
+    }
+
+    public function add_user()
+    {
+
+        $per = 'add user';
+        $check = $this->checkPermission->CheckPer($per);
+
+        if ($check) {
+            $allRole = $this->role->all();
+            require_once('views/admins/users/add.php');
+        } else {
+            header('Location: ?view=admin&act=403');
+        }
+    }
+
+    public function store_user()
+    {
+
+        $per = 'add user';
+
+        $check = $this->checkPermission->CheckPer($per);
+
+        if ($check) {
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+            if(empty($_POST['name'])||empty($_POST['email'])||empty($_POST['phone'])||empty($_POST['address']) ||empty($_POST['password'])){
+                header("Location: ?view=admin&act=add_user");
+                setcookie('er_adduser', 'Vui lòng nhập đầy đủ thông tin !', time() + 1);
+            }else{
+
+                $data = [
+
+                    'name' => $_POST['name'],
+                    'phone' => $_POST['phone'],
+                    'address' => $_POST['address'],
+                    'email' => $_POST['email'],
+                    'password' => $_POST['password'],
+                    'created_at' => date("Y-m-d H:i:s"),
+                    'update_at' => date("Y-m-d H:i:s"),
+                ];
+
+                $role = $_POST['role'];
+                $id = $this->user->insert($data);
+
+                $addrole = $this->userRole->insertUR($id, $role);
+                header("Location: ?view=admin&act=list_user");
+            }
+
+        }else {
+
+            header('Location: ?view=admin&act=403');
+        }
+
+
+    }
+
+    public function edit_user()
+    {
+
+        $per = 'edit user';
+        $check = $this->checkPermission->CheckPer($per);
+
+        if ($check) {
+
+            $id = $_GET['id'];
+            $data = $this->user->edit($id);
+            $allRole = $this->role->all();
+            $userHasRole = $this->userRole->getRoleUser($id);
+            require_once('views/admins/users/edit.php');
+        } else {
+            header('Location: ?view=admin&act=403');
+        }
+
+    }
+
+    public function update_user()
+    {
+
+        $per = 'edit user';
+        $check = $this->checkPermission->CheckPer($per);
+
+        if ($check) {
+
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+            $id = $_GET['id'];
+
+
+            $data = [
+                'name' => $_POST['name'],
+                'email' => $_POST['email'],
+                'address' => $_POST['address'],
+                'phone' => $_POST['phone'],
+                'created_at' => date("Y-m-d H:i:s"),
+                'update_at' => date("Y-m-d H:i:s"),
+            ];
+
+            $role = $_POST['role'];
+
+            $user = $this->user->update($data, $id);
+            $updateRole = $this->userRole->updateUR($id, $role);
+            header('Location: index.php?view=admin&act=list_user');
+        } else {
+            header('Location: ?view=admin&act=403');
+        }
+
+    }
+
+    function error403()
+    {
+
+        require_once('views/admins/403.php');
+    }
+
     //category
     public function list_category()
     {
@@ -104,6 +268,7 @@ class AdminController
 
 
     }
+
     //product
     public function list_product()
     {
@@ -117,39 +282,44 @@ class AdminController
         }
 
         $limit_recode = 8; // hien bao nhieu ban ghi
-        $offset = ($page-1) * $limit_recode;
+        $offset = ($page - 1) * $limit_recode;
         $previous_page = $page - 1;
         $next_page = $page + 1;
         $total_pages_sql = $this->product->CountProduct(); // lay ra cac ban ghi trong user
         $total_pages = ceil($total_pages_sql['total'] / $limit_recode); // lam tron
-        $products = $this->product->getDataPage($offset,$limit_recode);
+        $products = $this->product->getDataPage($offset, $limit_recode);
+
         //        $products = $this->product->all();
+
         $categories = $this->category->all();
         require_once('views/admins/products/index.php');
 
+
     }
 
-    public function add_product(){
+    public function add_product()
+    {
         $categories = $this->category->all();
         $products = $this->product->all();
         require_once('views/admins/products/add.php');
     }
 
-    public  function add_products(){
+    public function add_products()
+    {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $this->product->upload();
         $this->product->upload_images();
         $data = [
             'name' => $_POST['name'],
             'category_id' => $_POST['category_id'],
-            'description'  => $_POST['description'],
-            'price'  => $_POST['price'],
-            'sale_price'  => $_POST['sale_price'],
-            'discount_percent'  => $_POST['discount_percent'],
+            'description' => $_POST['description'],
+            'price' => $_POST['price'],
+            'sale_price' => $_POST['sale_price'],
+            'discount_percent' => $_POST['discount_percent'],
             'image' => $_FILES["image"]["name"],
             'created_at' => date("Y-m-d H:i:s"),
-            'size'  => implode("," , $_POST['size']),
-            'image_product' => implode(",",$_FILES["image_product"]["name"]),
+            'size' => implode(",", $_POST['size']),
+            'image_product' => implode(",", $_FILES["image_product"]["name"]),
         ];
         $new_product = $this->product->InsertProduct($data);
         header("Location: ?view=admin&act=list_product");
@@ -198,169 +368,13 @@ class AdminController
 
     }
 
-
-    //user
-    public function list_user(){
-
-        $per = 'add user';
-        $check =  $this->checkPermission->CheckPer($per);
-        if($check){
-//            $users = $this->user->all();
-            // phan trang
-            if (isset($_GET['page'])) {
-
-                $page = $_GET['page'];
-
-            } else {
-
-                $page = 1;
-            }
-
-            $limit_recode = 3; // hien bao nhieu ban ghi
-            $offset = ($page-1) * $limit_recode;
-            $previous_page = $page - 1;
-            $next_page = $page + 1;
-            $total_pages_sql = $this->user->CountUser(); // lay ra cac ban ghi trong user
-            $total_pages = ceil($total_pages_sql['total'] / $limit_recode); // lam tron
-
-            $users = $this->user->getDataPage($offset,$limit_recode);
-
-            require_once ('views/admins/users/index.php');
-
-        }else{
-
-            header('Location: ?view=admin&act=403');
-
-        }
-
-
-    }
-
-    public function list_customer(){
-
-        $customers = $this->customer->all();
-        require_once ('views/admins/users/customer.php');
-    }
-
-
-    public function delete_user()
+    public function list_customer()
     {
 
-        $per = 'delete user';
-        $check =  $this->checkPermission->CheckPer($per);
-
-        if($check){
-            $id = $_GET['id'];
-            $this->user->deleteUser($id);
-//        $this->userRole->deleteUR($id);
-            header('Location: ?view=admin&act=list_user');
-        }else{
-            header('Location: ?view=admin&act=403');
-        }
+        $customers = $this->customer->all();
+        require_once('views/admins/users/customer.php');
     }
 
-    public function add_user(){
-
-        $per = 'add user';
-        $check =  $this->checkPermission->CheckPer($per);
-
-        if($check){
-            $allRole = $this->role->all();
-            require_once ('views/admins/users/add.php');
-        }else{
-            header('Location: ?view=admin&act=403');
-        }
-    }
-
-    public function store_user(){
-
-        $per = 'add user';
-
-        $check =  $this->checkPermission->CheckPer($per);
-
-        if($check)
-        {
-            date_default_timezone_set('Asia/Ho_Chi_Minh');
-
-            $data = [
-
-                'name' => $_POST['name'],
-                'phone' => $_POST['phone'],
-                'address' => $_POST['address'],
-                'email' => $_POST['email'],
-                'password' => $_POST['password'],
-                'created_at' => date("Y-m-d H:i:s"),
-                'update_at' => date("Y-m-d H:i:s"),
-            ];
-
-            $role = $_POST['role'];
-            $id = $this->user->insert($data);
-
-            $addrole = $this->userRole->insertUR($id,$role);
-            header("Location: ?view=admin&act=list_user");
-        }else{
-            header('Location: ?view=admin&act=403');
-        }
-
-
-
-    }
-
-    public function edit_user(){
-
-        $per = 'edit user';
-        $check =  $this->checkPermission->CheckPer($per);
-
-        if($check){
-
-            $id = $_GET['id'];
-            $data = $this->user->edit($id);
-            $allRole = $this->role->all();
-            $userHasRole = $this->userRole->getRoleUser($id);
-            require_once ('views/admins/users/edit.php');
-        }else{
-            header('Location: ?view=admin&act=403');
-        }
-
-
-
-    }
-
-    public function update_user(){
-
-        $per = 'edit user';
-        $check =  $this->checkPermission->CheckPer($per);
-
-        if($check){
-
-            date_default_timezone_set('Asia/Ho_Chi_Minh');
-
-            $id = $_GET['id'];
-
-
-            $data = [
-                'name' => $_POST['name'],
-                'email' => $_POST['email'],
-                'address' => $_POST['address'],
-                'phone' => $_POST['phone'],
-                'created_at' => date("Y-m-d H:i:s"),
-                'update_at' => date("Y-m-d H:i:s"),
-            ];
-            $role = $_POST['role'];
-
-            $user = $this->user->update($data, $id);
-            $updateRole = $this->userRole->updateUR($id,$role);
-            header('Location: index.php?view=admin&act=list_user');
-        }else{
-            header('Location: ?view=admin&act=403');
-        }
-
-    }
-
-    function error403(){
-
-        require_once('views/admins/403.php');
-    }
 
 
 }

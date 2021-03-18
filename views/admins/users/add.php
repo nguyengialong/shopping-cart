@@ -195,21 +195,28 @@ include('views/admins/layouts/header.php');
                 <h3 align="center">Add User</h3>
 
                 <br>
+                <div class="alert-danger">
+                    <?php
+                    if(isset($_COOKIE['er_adduser'])){
 
+                        echo "<p style='color:#d52a1a'>" .$_COOKIE['er_adduser']. "</p>";
+                    }
+                    ?>
+                </div>
                 <form class="user" method="POST" action="?view=admin&act=store_user">
                     <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
-                            <input type="text" name = "name" class="form-control form-control-user" id="exampleFirstName" placeholder=" Tên: " required="required">
+                            <input type="text" name = "name" class="form-control form-control-user" id="exampleFirstName" placeholder=" Tên: ">
                         </div>
                         <div class="col-sm-6">
-                            <input type="number" name = "phone" class="form-control form-control-user" id="exampleLastName" placeholder="Số điện thoại:" required="required">
+                            <input type="number" name = "phone" class="form-control form-control-user" id="exampleLastName" placeholder="Số điện thoại:">
                         </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" name = "address"  class="form-control form-control-user" id="exampleInputEmail" placeholder="Địa chỉ:" required="required">
+                        <input type="text" name = "address"  class="form-control form-control-user" id="exampleInputEmail" placeholder="Địa chỉ:">
                     </div>
                     <div class="form-group">
-                        <input type="email" name = "email"  class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address:" required="required">
+                        <input type="email" name = "email"  class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address:">
                     </div>
                     <div class="form-group">
                         <label for="">Role</label>
@@ -222,7 +229,7 @@ include('views/admins/layouts/header.php');
 
                     <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
-                            <input type="password" name = "password"  class="form-control form-control-user" id="exampleInputPassword" placeholder="Mật khẩu:" required="required">
+                            <input type="password" name = "password"  class="form-control form-control-user" id="exampleInputPassword" placeholder="Mật khẩu:">
                         </div>
 
                         <?php

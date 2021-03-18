@@ -68,8 +68,7 @@ class Role{
 
     function updateRole($data,$id){
 
-        $query = "UPDATE roles SET name = '".$data['name']."',
-                        created_at = '".$data['created_at']."',updated_at = '".$data['updated_at']."' WHERE id = ".$id;
+        $query = "UPDATE roles SET name = '".$data['name']."',created_at = '".$data['created_at']."',updated_at = '".$data['updated_at']."' WHERE id = ".$id;
 
          return $this->conn->query($query);
 
