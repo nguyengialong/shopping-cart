@@ -177,13 +177,14 @@ switch ($mod) {
             case 'importForm':
                 $importExcel->index();
                 break;
+
             case 'importFile':
                 $importExcel->importFile();
                 break;
+
             case 'exportExcel':
                 $importExcel->Export();
                 break;
-
 
             default:
 
@@ -208,6 +209,7 @@ switch ($mod) {
                 break;
             case 'plus_cart':
                 $shop_controller->plus_cart();
+                break;
             case 'cart':
                 $shop_controller->cart();
                 break;

@@ -61,7 +61,6 @@ class AdminController
             $next_page = $page + 1;
             $total_pages_sql = $this->user->CountUser(); // lay ra cac ban ghi trong user
             $total_pages = ceil($total_pages_sql['total'] / $limit_recode); // lam tron
-
             $users = $this->user->getDataPage($offset, $limit_recode);
 
             require_once('views/admins/users/index.php');

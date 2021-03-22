@@ -11,6 +11,7 @@ require_once('controller/CheckPermissionController.php');
 
 class LoginController
 {
+
     public $checkPermission;
     public $modelHasRole;
     public $role;
@@ -62,6 +63,7 @@ class LoginController
             if ($result != null) {
                 $_SESSION['user'] = $result;
                 $_SESSION['islogin'] = 1;
+
                 $per = 'manager page';
                 $check = $this->checkPermission->CheckPer($per);
                 if ($check) {
@@ -139,7 +141,7 @@ class LoginController
         $new_permission = [];
 
         $createRole = [
-            'name' => 'admod',
+            'name' => 'admin',
             'created_at' => date("Y-m-d H:i:s"),
         ];
 
@@ -247,10 +249,6 @@ class LoginController
         header('Location: ?view=admin&act=index');
 
     }
-
-
-
-
 
 }
 

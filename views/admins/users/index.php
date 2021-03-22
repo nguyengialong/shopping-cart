@@ -198,6 +198,7 @@ include('views/admins/layouts/header.php');
                     <h6 class="m-0 font-weight-bold text-primary">Bảng người dùng</h6>
                 </div>
                 <div class="card-body">
+
                     <div class="table-responsive-lg">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>

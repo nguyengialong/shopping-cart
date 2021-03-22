@@ -20,6 +20,7 @@ class PermissionController
         $per = 'add permission';
         $check = $this->checkPermission->CheckPer($per);
         if($check){
+
             if (isset($_GET['page'])) {
 
                 $page = $_GET['page'];
@@ -40,6 +41,7 @@ class PermissionController
 //        $listPermission = $this->permission->all();
 
             require_once('views/admins/permission/index.php');
+
         }else{
 
             header('Location: ?view=admin&act=403');
